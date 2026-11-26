@@ -375,7 +375,7 @@ body.focus .card,body.focus .nav,body.focus .bottom,body.focus .gbanner{opacity:
   .top{padding:0 16px}.bottom{padding:0 16px}
   .logo span{font-size:14px}
   .pill{padding:7px 14px;font-size:13px}
-  .hint{display:none}
+  .hint{width:76px!important;height:76px!important;font-size:12px}
   .nav{width:44px;height:44px;top:var(--navY,40%);bottom:auto;transform:translateY(-50%);background:rgba(10,20,14,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
   .nav.prev{left:12px}.nav.next{right:12px}
   .card{bottom:70px}
@@ -508,6 +508,30 @@ body.focus .card,body.focus .nav,body.focus .bottom,body.focus .gbanner{opacity:
   .gb-buy{padding:22px 24px 24px;min-width:0}
   .gbanner .pr strong{font-size:44px!important}
 }
+/* картка клану: фото без рамки, м'яко розчиняється */
+.gbanner.gbanner{grid-template-columns:300px 1fr auto}
+.gbanner .gb-media{border-radius:0!important;overflow:visible!important;aspect-ratio:auto;align-self:stretch;margin:-16px 0 -16px -16px;min-height:170px}
+.gbanner .gb-media .avatars{position:absolute!important;inset:0}
+.gbanner .gb-media .avatars img{-webkit-mask-image:radial-gradient(ellipse 62% 70% at 50% 50%,#000 40%,transparent 100%)!important;mask-image:radial-gradient(ellipse 62% 70% at 50% 50%,#000 40%,transparent 100%)!important}
+.gbanner .gb-badge{top:14px;left:18px;z-index:2}
+@media (max-width:860px){
+  .gbanner.gbanner{grid-template-columns:1fr}
+  .gbanner .gb-media{margin:0;min-height:0;aspect-ratio:16/10;position:relative}
+  .gbanner .gb-media .avatars img{-webkit-mask-image:radial-gradient(ellipse 72% 72% at 50% 42%,#000 45%,transparent 100%)!important;mask-image:radial-gradient(ellipse 72% 72% at 50% 42%,#000 45%,transparent 100%)!important}
+}
+/* підказка «Гортай» — постійно світиться в кільці */
+.ring .hint{position:absolute;z-index:31;transform:translate(-50%,-50%);transition:opacity .5s ease;pointer-events:none;
+  border-color:rgba(195,221,149,.45);color:#eaf3e4;background:radial-gradient(closest-side,rgba(60,180,90,.18),rgba(10,20,14,.35));
+  animation:hintGlow 2.4s ease-in-out infinite}
+.ring .hint.hide{opacity:0}
+body.grid .ring .hint{opacity:0}
+@keyframes hintGlow{0%,100%{box-shadow:0 0 18px rgba(120,220,140,.18),0 0 0 0 rgba(195,221,149,.35)}50%{box-shadow:0 0 38px rgba(120,220,140,.45),0 0 0 9px rgba(195,221,149,0)}}
+/* фото клану в картці — повністю розчиняється до країв */
+.gbanner .gb-media .avatars img{-webkit-mask-image:radial-gradient(closest-side,#000 50%,transparent 100%)!important;mask-image:radial-gradient(closest-side,#000 50%,transparent 100%)!important}
+@media (max-width:860px){ .gbanner .gb-media .avatars img{-webkit-mask-image:radial-gradient(closest-side,#000 58%,transparent 100%)!important;mask-image:radial-gradient(closest-side,#000 58%,transparent 100%)!important} }
+/* фото клану на екрані пакета — без різких обрізів по краях */
+.army-img{-webkit-mask-image:radial-gradient(closest-side,#000 62%,transparent 100%)!important;mask-image:radial-gradient(closest-side,#000 62%,transparent 100%)!important;object-position:50% 45%!important}
+@media (max-width:860px){ .army-img{-webkit-mask-image:radial-gradient(closest-side,#000 66%,transparent 100%)!important;mask-image:radial-gradient(closest-side,#000 66%,transparent 100%)!important} }
 </style>
 </head>
 <body>
@@ -822,6 +846,7 @@ function layout(){
   floor.style.setProperty("--floorH", Rz*1.3+"px");
   floor.style.setProperty("--floorY", (baseY - Rz*0.45)+"px");
   floor.style.setProperty("--thick", Math.max(14, Rz*0.16)+"px");
+  if (typeof placeHint === "function" && typeof hint !== "undefined") placeHint();
 }
 function render(){
   if (mode==="grid") return renderGrid();
@@ -915,13 +940,14 @@ function tick(){
   requestAnimationFrame(tick);
 }
 function goTo(i){
+  if (mode === "ring" && i !== active) hintDone();
   // shortest path
   let d = ((i - target)%N + N + N/2)%N - N/2;
   target = Math.round(target + d);
   setActive(((target%N)+N)%N);
 }
 let lastDir = 1;
-function step(dir){ if (mode==="grid" && !$("detail").classList.contains("open")) return; lastDir = dir; target = Math.round(target)+dir; setActive(((target%N)+N)%N); hideHint(); }
+function step(dir){ if (mode==="grid" && !$("detail").classList.contains("open")) return; lastDir = dir; hintDone(); target = Math.round(target)+dir; setActive(((target%N)+N)%N); hideHint(); }
 
 /* ============ ACTIVE CARD ============ */
 function stats(c){
@@ -1129,7 +1155,6 @@ function onScroll(){
   introEl.style.filter = (!mob && p > .01) ? `blur(${(p*10).toFixed(1)}px)` : "";
   ringEl.style.transform = (mob || p >= 0.999) ? "" : `scale(${(0.96 + 0.04*p).toFixed(4)})`;   // без transform — щоб fixed-плашка кріпилась до екрана
   ringEl.style.opacity = mob ? "" : (0.6 + 0.4*p).toFixed(3);
-  hint.classList.toggle("off", p < .85);
   document.body.classList.toggle("scrolled", scrollY > 40);
   gridCount();
   const rr = ringEl.getBoundingClientRect();
@@ -1152,7 +1177,7 @@ stage.addEventListener("pointerdown",e=>{dragX=e.clientX; dragRot=target; moved=
 stage.addEventListener("pointermove",e=>{
   if (dragX===null || mode==="grid") return;
   const dx = e.clientX - dragX;
-  if (Math.abs(dx)>6 && !moved){ moved=true; try{stage.setPointerCapture(pid)}catch(_){} stage.classList.add("dragging"); hideHint(); }
+  if (Math.abs(dx)>6 && !moved){ moved=true; try{stage.setPointerCapture(pid)}catch(_){} stage.classList.add("dragging"); hintDone(); }
   if (moved){ target = dragRot - dx/(Rx*0.55); rot = target; render(); }
 });
 const endDrag = e=>{
@@ -1162,16 +1187,16 @@ const endDrag = e=>{
 stage.addEventListener("pointerup",endDrag); stage.addEventListener("pointercancel",endDrag);
 
 // "Гортай" hint follows cursor until first interaction
-// підказка «Гортай»: ховається від будь-якої дії, повертається після 4 с бездіяльності
-const hint = $("hint"); let idleT;
-const overlayOpen = ()=>["detail","bundle","menu"].some(id=>$(id).classList.contains("open"));
-function hideHint(){
-  hint.classList.add("hide");
-  clearTimeout(idleT);
-  idleT = setTimeout(()=>{ if (mode==="ring" && !overlayOpen()) hint.classList.remove("hide"); }, 4000);
+// підказка «Гортай»: світиться в кільці, доки вперше не почали гортати
+const hint = $("hint"); let hintGone = false;
+$("ring").appendChild(hint);
+function hideHint(){}
+function hintDone(){ if (hintGone) return; hintGone = true; hint.classList.add("hide"); }
+function placeHint(){
+  const mob = W < 860, hw = frontH * 0.42 * 1.16;
+  hint.style.left = (mob ? W - 104 : Math.min(W - 70, cx + hw*0.62 + 70)) + "px";
+  hint.style.top = (baseY - frontH * (mob ? 0.98 : 0.55)) + "px";
 }
-["pointerdown","keydown","wheel","touchstart"].forEach(ev=>addEventListener(ev, hideHint, {passive:true}));
-stage.addEventListener("mousemove",e=>{ hint.style.left=e.clientX+"px"; hint.style.top=e.clientY+"px"; });
 
 /* ============ OVERLAYS / FOOTER ============ */
 const syncLock = ()=>{ document.documentElement.style.overflow = ["detail","bundle","menu"].some(id=>$(id).classList.contains("open")) ? "hidden" : ""; };
