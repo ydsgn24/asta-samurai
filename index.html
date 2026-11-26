@@ -534,6 +534,9 @@ body.grid .ring .hint{opacity:0}
 @media (max-width:860px){ .army-img{-webkit-mask-image:radial-gradient(closest-side,#000 66%,transparent 100%)!important;mask-image:radial-gradient(closest-side,#000 66%,transparent 100%)!important} }
 /* одна картка клану завжди на одному місці — під блоком самураїв */
 #gBanner{display:none!important}
+/* Safari: м'які краї вже «запечені» у фото — CSS-маски вимкнено */
+.gbanner .gb-media .avatars img,.m-av img,.army-img{-webkit-mask-image:none!important;mask-image:none!important}
+.gbanner .gb-media .avatars img{object-fit:contain!important}
 </style>
 </head>
 <body>
