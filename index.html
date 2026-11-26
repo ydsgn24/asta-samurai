@@ -945,7 +945,7 @@ function setActive(i){
   }, 180);
   $("cNum").textContent = pad(c.n);
   if (mode !== "grid"){ $("cur").textContent = pad(c.n); $("bar").style.width = (c.n/N*100)+"%"; }
-  history.replaceState(null,"","#"+c.n+($("detail").classList.contains("open")?"-details":""));
+  if ($("detail").classList.contains("open")) history.replaceState(null,"","#"+c.n+"-details");
   if ($("detail").classList.contains("open")) swapDetail(i, lastDir);
 }
 
@@ -1032,6 +1032,7 @@ function openDetail(i){
 }
 function closeDetail(){
   const dl = $("detail"); if (!dl.classList.contains("open")) return;
+  history.replaceState(null,"",location.pathname);
   const img = $("dImg"), r1 = img.getBoundingClientRect();
   const el = els[active], r0 = el.querySelector("img").getBoundingClientRect();
   dl.classList.remove("open");
@@ -1040,7 +1041,7 @@ function closeDetail(){
     setTimeout(()=>document.body.classList.remove("focus"), 380);
     fly(r1, r0, COURSES[active].img, 700).then(()=>{ el.classList.remove("is-flying"); img.style.visibility = ""; });
   } else document.body.classList.remove("focus");
-  history.replaceState(null,"","#"+(active+1)); lastFocus && lastFocus.focus({preventScroll:true});
+  lastFocus && lastFocus.focus({preventScroll:true});
 }
 
 /* ============ BUNDLE ============ */
@@ -1090,7 +1091,7 @@ function sizeArmyDisk(){
   disk.style.setProperty("--floorW", w+"px"); disk.style.setProperty("--floorH", h+"px"); disk.style.setProperty("--thick", Math.max(14,h*0.14)+"px");
 }
 function openBundle(){ const ai = $("armyImg"); if (!ai.getAttribute("src")) ai.src = "img/clan.webp"; lastFocus = document.activeElement; closeMenu(); $("bundle").classList.add("open"); requestAnimationFrame(sizeArmyDisk); $("bClose").focus(); hideHint(); history.replaceState(null,"","#bundle"); }
-function closeBundle(){ $("bundle").classList.remove("open"); history.replaceState(null,"","#"+(active+1)); lastFocus && lastFocus.focus(); }
+function closeBundle(){ $("bundle").classList.remove("open"); history.replaceState(null,"",location.pathname); lastFocus && lastFocus.focus(); }
 $("openBundle").onclick = openBundle; $("gBtn").onclick = openBundle; $("bClose").onclick = closeBundle;
 $("dUpsell").onclick = ()=>{ closeDetail(); openBundle(); };
 addEventListener("resize", sizeArmyDisk);
@@ -1181,7 +1182,7 @@ document.querySelectorAll(".sf-up").forEach(b=>b.onclick = ()=>{ if ($("bundle")
 /* ============ INIT ============ */
 addEventListener("resize",()=>{layout();render();});
 const initHash = location.hash, fromHash = parseInt(initHash.slice(1));
-const start = fromHash>=1 && fromHash<=N ? fromHash-1 : 0;
+const start = /details/.test(initHash) && fromHash>=1 && fromHash<=N ? fromHash-1 : 0;   // після оновлення — завжди №1
 rot = target = start; layout(); setActive(start); active=start; render(); tick();
 if (/details|bundle|grid/.test(initHash)) scrollTo({top:innerHeight, behavior:"instant"});
 onScroll();
