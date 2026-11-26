@@ -817,7 +817,8 @@ function loadBig(i){
   const im = new Image(); im.decoding = "async"; im.onload = ()=>{ imgs[i].src = im.src; }; im.src = COURSES[i].img;
 }
 function primeAround(c){ loadBig(c); for (let d=1; d<=2; d++){ loadSmall((c+d)%N); loadSmall((c-d+N)%N); } }
-function loadAllSmall(){ for (let i=0;i<N;i++) loadSmall(i); const pre = new Image(); pre.src = "img/clan.webp"; }
+function loadClanThumbs(){ document.querySelectorAll("img.clan-thumb:not([src])").forEach(im=>im.src = "img/clan-s.webp"); }
+function loadAllSmall(){ for (let i=0;i<N;i++) loadSmall(i); loadClanThumbs(); const pre = new Image(); pre.src = "img/clan.webp"; }
 addEventListener("load", ()=>{ (window.requestIdleCallback || setTimeout)(loadAllSmall, 300); });
 
 let rot = 0, target = 0, active = 0, mode = "ring";          // rot: float rotation in "items"
@@ -1095,12 +1096,13 @@ function clanRow(){
     return `<img src="img/s${n}.webp" alt="" style="height:${(sc*100).toFixed(1)}%;z-index:${n===15 ? 0 : 20-d}">`;
   }).join("");
 }
-$("gAv").innerHTML = $("mAv").innerHTML = `<img src="img/clan-s.webp" alt="Усі 15 самураїв" loading="lazy" decoding="async">`;
+$("gAv").innerHTML = $("mAv").innerHTML = `<img class="clan-thumb" alt="Усі 15 самураїв">`;
 $("clanSec").innerHTML = $("gBanner").outerHTML.replace(/ id="[^"]*"/g, "");
 $("clanSec").querySelector(".btn").onclick = openBundle;
 $("gBanner").querySelector(".gb-media").onclick = $("clanSec").querySelector(".gb-media").onclick = openBundle;
 $("mOld").textContent = money(fullPrice); $("mNew").textContent = money(BUNDLE.price);
 $("mClan").onclick = openBundle;
+$("openMenu").addEventListener("click", loadClanThumbs);
 
 
 // battle formation: back → middle → front (front centre = №1)
