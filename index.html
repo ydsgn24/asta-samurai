@@ -1099,7 +1099,7 @@ function clanRow(){
     return `<img src="img/s${n}.webp" alt="" style="height:${(sc*100).toFixed(1)}%;z-index:${n===15 ? 0 : 20-d}">`;
   }).join("");
 }
-$("gAv").innerHTML = $("mAv").innerHTML = `<img class="clan-thumb" alt="Усі 15 самураїв">`;
+$("gAv").innerHTML = $("mAv").innerHTML = `<img class="clan-thumb" src="img/clan-s.webp" fetchpriority="low" alt="">`;
 $("clanSec").innerHTML = $("gBanner").outerHTML.replace(/ id="[^"]*"/g, "");
 $("clanSec").querySelector(".btn").onclick = openBundle;
 $("gBanner").querySelector(".gb-media").onclick = $("clanSec").querySelector(".gb-media").onclick = openBundle;
