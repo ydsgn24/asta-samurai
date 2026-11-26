@@ -23,7 +23,9 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 [hidden]{display:none!important}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overflow-x:clip;background:#0a0f0c}
+html,body{max-width:100%;overscroll-behavior-x:none}
+body{overflow-x:clip}
 body{min-height:100%}
 body{
   background:radial-gradient(120% 90% at 50% 75%, #0f2a18 0%, var(--bg2) 35%, var(--bg) 70%);
