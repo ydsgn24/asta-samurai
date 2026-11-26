@@ -224,7 +224,7 @@ body.grid .disk{opacity:0;transform:translate(-50%,-30%) scale(.9)}
 .sam img{display:block;height:100%;width:auto;pointer-events:none;-webkit-user-drag:none;position:relative}
 .sam .foot{position:absolute;left:50%;bottom:-1.5%;width:62%;height:7%;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.8),transparent);pointer-events:none}
 .sam .cap{position:absolute;left:50%;top:100%;transform:translate(-50%,12px);width:var(--capW,180px);text-align:center;font-size:13px;line-height:1.4;color:#dfe6e0;
-  opacity:0;pointer-events:none;transition:opacity .3s;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  opacity:0;pointer-events:none;transition:opacity .3s;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
 .sam .cap b{color:var(--lime);font-weight:600;margin-right:4px}
 body.grid .sam .cap{opacity:1;transition-delay:.45s}
 body.grid .sam .tag,body.grid .sam .foot{display:none}
@@ -532,6 +532,7 @@ body.grid .ring .hint{opacity:0}
 /* фото клану на екрані пакета — без різких обрізів по краях */
 .army-img{-webkit-mask-image:radial-gradient(closest-side,#000 62%,transparent 100%)!important;mask-image:radial-gradient(closest-side,#000 62%,transparent 100%)!important;object-position:50% 45%!important}
 @media (max-width:860px){ .army-img{-webkit-mask-image:radial-gradient(closest-side,#000 66%,transparent 100%)!important;mask-image:radial-gradient(closest-side,#000 66%,transparent 100%)!important} }
+body.grid .gbanner{transform:translate(-50%,0)!important}
 </style>
 </head>
 <body>
@@ -878,13 +879,15 @@ function render(){
   }
 }
 function renderGrid(){
+  loadAllSmall();
   const mobile = W < 860, cols = mobile ? 2 : 5, rows = Math.ceil(N/cols);
-  const top = mobile ? 104 : 196, bottom = mobile ? 100 : 92;
+  const top = mobile ? 104 : 110, bottom = mobile ? 100 : 92;
   const gridW = Math.min(W - (mobile?24:64), 1240);
   const cellW = gridW/cols, cellH = mobile ? cellW*1.85 : (innerHeight - top - bottom)/rows;
   const gb = $("gBanner");
-  gb.style.top = mobile ? (top + rows*cellH + 24) + "px" : "";
-  ringEl.style.height = mobile ? (top + rows*cellH + 24 + gb.offsetHeight + bottom) + "px" : "";
+  // карточка «Весь клан» — завжди під сіткою
+  gb.style.top = (top + rows*cellH + 24) + "px";
+  ringEl.style.height = (top + rows*cellH + 24 + gb.offsetHeight + bottom) + "px";
   const capH = mobile ? 74 : 64;
   const body = Math.min((cellH - capH)*0.76, cellW*1.9);   // figure height without crests/bow
   const left = (W - gridW)/2;
