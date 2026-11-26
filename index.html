@@ -1030,13 +1030,14 @@ function openDetail(i){
   }
   history.replaceState(null,"","#"+(i+1)+"-details");
 }
-function closeDetail(){
+function closeDetail(opts = {}){
   const dl = $("detail"); if (!dl.classList.contains("open")) return;
   history.replaceState(null,"",location.pathname);
   const img = $("dImg"), r1 = img.getBoundingClientRect();
   const el = els[active], r0 = el.querySelector("img").getBoundingClientRect();
   dl.classList.remove("open");
-  if (!REDUCE && inView(r0) && r1.width){
+  if (opts.fade){ setTimeout(()=>document.body.classList.remove("focus"), 450); }   // просто розчиняється (перехід на «Весь клан»)
+  else if (!REDUCE && inView(r0) && r1.width){
     img.style.visibility = "hidden"; el.classList.add("is-flying");
     setTimeout(()=>document.body.classList.remove("focus"), 380);
     fly(r1, r0, COURSES[active].img, 700).then(()=>{ el.classList.remove("is-flying"); img.style.visibility = ""; });
@@ -1093,7 +1094,7 @@ function sizeArmyDisk(){
 function openBundle(){ const ai = $("armyImg"); if (!ai.getAttribute("src")) ai.src = "img/clan.webp"; lastFocus = document.activeElement; closeMenu(); $("bundle").classList.add("open"); requestAnimationFrame(sizeArmyDisk); $("bClose").focus(); hideHint(); history.replaceState(null,"","#bundle"); }
 function closeBundle(){ $("bundle").classList.remove("open"); history.replaceState(null,"",location.pathname); lastFocus && lastFocus.focus(); }
 $("openBundle").onclick = openBundle; $("gBtn").onclick = openBundle; $("bClose").onclick = closeBundle;
-$("dUpsell").onclick = ()=>{ closeDetail(); openBundle(); };
+$("dUpsell").onclick = ()=>{ closeDetail({fade:true}); openBundle(); };
 addEventListener("resize", sizeArmyDisk);
 
 /* ============ MENU ============ */
