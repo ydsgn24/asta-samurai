@@ -154,7 +154,7 @@ body.scrolled .top{background:linear-gradient(180deg,rgba(6,12,8,.94) 55%,rgba(6
 @keyframes shine{60%,100%{transform:translateX(100%)}}
 .offer-pill:hover{transform:translateY(-1px);border-color:var(--lime)}
 .offer-pill .op-t{display:inline-flex;align-items:center;gap:8px}
-.offer-pill em{font-style:normal;padding:4px 10px;border-radius:999px;background:var(--lime);color:#0b1a0f;font-weight:700;font-size:12.5px}
+.offer-pill em{font-style:normal;padding:4px 10px;border-radius:999px;background:linear-gradient(90deg,#16883a,#3fa556);color:#fff;font-weight:700;font-size:12.5px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
 .top-right{display:flex;align-items:center}
 .gbanner{position:absolute;left:50%;top:88px;transform:translate(-50%,-12px);width:min(1180px,calc(100vw - 32px));z-index:20;border-radius:22px;padding:14px 16px 14px 24px;
   display:flex;align-items:center;gap:22px;opacity:0;pointer-events:none;transition:opacity .45s,transform .6s var(--ease)}
@@ -189,7 +189,7 @@ body.grid .gbanner{opacity:1;pointer-events:auto;transform:translate(-50%,0);tra
 .bundle.open .offer{transform:none;opacity:1}
 .bundle .offer h2{font-size:clamp(24px,2.6vw,36px);font-weight:500;line-height:1.08;margin:10px 0 8px}
 .bundle .offer p{color:#c8d2ca;font-size:15px;line-height:1.5;max-width:520px}
-.o-badge{display:inline-flex;gap:8px;align-items:center;padding:5px 12px;border-radius:999px;background:linear-gradient(90deg,#16883a,var(--lime));color:#08140c;font-weight:700;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase}
+.o-badge{display:inline-flex;gap:8px;align-items:center;padding:5px 12px;border-radius:999px;background:linear-gradient(90deg,#16883a,#3fa556);color:#fff;font-weight:700;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
 .o-stats{display:grid;grid-template-columns:repeat(3,auto);gap:8px}
 .o-stats .stat{min-width:96px}
 .o-buy{display:grid;gap:10px;justify-items:stretch;min-width:240px}
@@ -219,7 +219,7 @@ body.grid .disk{opacity:0;transform:translate(-50%,-30%) scale(.9)}
 .sam{position:absolute;left:0;top:0;transform-origin:50% 100%;will-change:transform,filter,opacity}
 .sam img{display:block;height:100%;width:auto;pointer-events:none;-webkit-user-drag:none;position:relative}
 .sam .foot{position:absolute;left:50%;bottom:-1.5%;width:62%;height:7%;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.8),transparent);pointer-events:none}
-.sam .cap{position:absolute;left:50%;top:100%;transform:translate(-50%,6px);width:var(--capW,180px);text-align:center;font-size:12.5px;line-height:1.3;color:#dfe6e0;
+.sam .cap{position:absolute;left:50%;top:100%;transform:translate(-50%,12px);width:var(--capW,180px);text-align:center;font-size:13px;line-height:1.4;color:#dfe6e0;
   opacity:0;pointer-events:none;transition:opacity .3s;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .sam .cap b{color:var(--lime);font-weight:600;margin-right:4px}
 body.grid .sam .cap{opacity:1;transition-delay:.45s}
@@ -371,7 +371,9 @@ body.focus .card,body.focus .nav,body.focus .bottom,body.focus .gbanner{opacity:
   .top{padding:0 16px}.bottom{padding:0 16px}
   .logo span{font-size:14px}
   .pill{padding:7px 14px;font-size:13px}
-  .nav,.hint{display:none}
+  .hint{display:none}
+  .nav{width:44px;height:44px;top:var(--navY,40%);bottom:auto;transform:translateY(-50%);background:rgba(10,20,14,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+  .nav.prev{left:12px}.nav.next{right:12px}
   .card{bottom:70px}
   .card h1{font-size:20px}
   .progress{width:70px}
@@ -390,7 +392,7 @@ body.focus .card,body.focus .nav,body.focus .bottom,body.focus .gbanner{opacity:
   .gbanner .pr s{font-size:16px;order:2}
   .gbanner .btn{height:54px;width:100%;font-size:16px}
   .bundle{padding:64px 0 0}
-  .bundle .offer{width:calc(100% - 32px);margin-top:-16vh}
+  .bundle .offer{width:calc(100% - 32px);margin-top:-24vh}
   .bundle .offer{grid-template-columns:1fr;gap:16px;padding:18px}
   .o-stats .stat{min-width:0}
   .army{height:62vh}
@@ -431,6 +433,13 @@ body.focus .card,body.focus .nav,body.focus .bottom,body.focus .gbanner{opacity:
 .detail.swap-in .d-img img{opacity:0;translate:calc(var(--dir,1) * 70px) 0;transition:none}
 .detail.swap-out :is(.d-head,.d-desc,.d-sec,.buy .stats,.buy .price,.buy .note){opacity:0;translate:0 10px}
 .detail.swap-in :is(.d-head,.d-desc,.d-sec,.buy .stats,.buy .price,.buy .note){opacity:0;translate:0 -10px;transition:none}
+/* мобільна продуктивність скролу */
+@media (max-width:860px){
+  body{background-attachment:scroll}
+  .hot::after{display:none}
+  .gbanner,.clan-sec .gbanner,.card{-webkit-backdrop-filter:none;backdrop-filter:none}
+  body.grid .sam{will-change:auto}
+}
 </style>
 </head>
 <body>
@@ -680,7 +689,7 @@ const stage = $("stage"), floor = $("floor");
 const els = COURSES.map((c,i)=>{
   const el = document.createElement("div");
   el.className = "sam";
-  el.innerHTML = `<div class="tag">${pad(c.n)} · ${c.t}</div><div class="foot"></div><div class="cap"><b>${pad(c.n)}</b>${c.t}<br><span style="color:${c.free?"var(--lime)":c.offline?"var(--gold)":"#9aa89e"};font-weight:600">${c.free?"● Безкоштовно":c.offline?"Офлайн":money(c.price)}</span></div><button aria-label="${pad(c.n)} — ${c.t}"><img src="${c.img}" alt="" draggable="false"></button>`;
+  el.innerHTML = `<div class="tag">${pad(c.n)} · ${c.t}</div><div class="foot"></div><div class="cap"><b>${pad(c.n)}</b>${c.t}<br><span style="display:inline-block;margin-top:5px;color:${c.free?"var(--lime)":c.offline?"var(--gold)":"#9aa89e"};font-weight:600">${c.free?"● Безкоштовно":c.offline?"Офлайн":money(c.price)}</span></div><button aria-label="${pad(c.n)} — ${c.t}"><img src="${c.img}" alt="" draggable="false"></button>`;
   el.querySelector("button").addEventListener("click", e=>{
     if (moved) return;
     if (mode==="grid"){ goTo(i); openDetail(i); return; }
@@ -699,6 +708,7 @@ function layout(){
   if (mobile){
     // висота блоку — по вмісту, щоб самурай стояв одразу під заголовком
     const ringH = Math.round(30 + W*0.78*1.16 + cardH + 50);
+    ringEl.style.setProperty("--navY", Math.round(30 + W*0.78*1.16*0.45) + "px");
     if (mode !== "grid"){ ringEl.style.height = ringH + "px"; H = ringH; }
     baseY = H - 84 - cardH + 34;                     // картка трохи перекриває ноги
     frontH = Math.min(W*0.78, (baseY - 30)/1.16);
@@ -748,11 +758,11 @@ function renderGrid(){
   const mobile = W < 860, cols = mobile ? 2 : 5, rows = Math.ceil(N/cols);
   const top = mobile ? 104 : 196, bottom = mobile ? 100 : 92;
   const gridW = Math.min(W - (mobile?24:64), 1240);
-  const cellW = gridW/cols, cellH = mobile ? cellW*1.55 : (innerHeight - top - bottom)/rows;
+  const cellW = gridW/cols, cellH = mobile ? cellW*1.85 : (innerHeight - top - bottom)/rows;
   const gb = $("gBanner");
   gb.style.top = mobile ? (top + rows*cellH + 24) + "px" : "";
   ringEl.style.height = mobile ? (top + rows*cellH + 24 + gb.offsetHeight + bottom) + "px" : "";
-  const capH = mobile ? 44 : 52;
+  const capH = mobile ? 74 : 64;
   const body = Math.min((cellH - capH)*0.76, cellW*1.9);   // figure height without crests/bow
   const left = (W - gridW)/2;
   for (let i=0;i<N;i++){
@@ -769,12 +779,23 @@ function renderGrid(){
     el.style.setProperty("--capW", (cellW-10)+"px");
     el.classList.toggle("is-active", i===active);
   }
+  gridCount();
+}
+// у сітці лічильник показує, скільки самураїв уже видно / переглянуто
+let gridSeen = 0;
+function gridCount(){
+  if (mode !== "grid") return;
+  let n = 0;
+  for (let i=0;i<N;i++){ const r = els[i].getBoundingClientRect(); if (r.top + r.height*0.6 < innerHeight) n = i+1; }
+  gridSeen = Math.max(gridSeen, n, 1);
+  $("cur").textContent = pad(gridSeen); $("bar").style.width = (gridSeen/N*100)+"%";
 }
 let animT;
 function setMode(m){
   if (m===mode) return;
   mode = m; document.body.classList.add("anim");
-  if (m === "ring"){ ringEl.style.height = ""; layout(); }
+  if (m === "ring"){ ringEl.style.height = ""; layout(); $("cur").textContent = pad(active+1); $("bar").style.width = ((active+1)/N*100)+"%"; }
+  else gridSeen = 0;
   requestAnimationFrame(onScroll);
   document.body.classList.toggle("grid", m==="grid");
   $("vRing").classList.toggle("on", m==="ring"); $("vRing").setAttribute("aria-pressed", m==="ring");
@@ -823,8 +844,7 @@ function setActive(i){
     body.classList.remove("out");
   }, 180);
   $("cNum").textContent = pad(c.n);
-  $("cur").textContent = pad(c.n);
-  $("bar").style.width = (c.n/N*100)+"%";
+  if (mode !== "grid"){ $("cur").textContent = pad(c.n); $("bar").style.width = (c.n/N*100)+"%"; }
   history.replaceState(null,"","#"+c.n+($("detail").classList.contains("open")?"-details":""));
   if ($("detail").classList.contains("open")) swapDetail(i, lastDir);
 }
@@ -960,7 +980,7 @@ function buildArmy(){
   FORM.forEach((r,ri)=>r.row.forEach((n,ci)=>{
     const c = COURSES[n-1], hero = n===1;
     const x = 50 + (ci-2)*(r.span*100/4) + (ri===1 ? r.span*100/8*(ci<2?1:ci>2?-1:0) : 0);
-    const h = r.h*(hero?1.08:1)*(1+(c.k-1)*.6)*100;
+    const h = (innerWidth < 860 ? 0.8 : 1) * r.h*(hero?1.08:1)*(1+(c.k-1)*.6)*100;
     html += `<div class="u${hero?" hero":""}" style="--cx:${FEET[n-1][1]};left:${x}%;bottom:${r.y*100}%;height:${h}%;z-index:${ri*10+(ci===2?5:0)};filter:brightness(${r.b});transition-delay:${(.15+d++*.04).toFixed(2)}s"><img src="${c.img}" alt="№${n} ${c.t}"></div>`;
   }));
   a.innerHTML = html;
@@ -1006,11 +1026,12 @@ function onScroll(){
   const mob = innerWidth < 860;
   introEl.style.transform = mob ? "" : `translateY(${p*12}vh)`;
   introEl.style.opacity = Math.max(0, 1 - p*1.5).toFixed(3);
-  introEl.style.filter = p > .01 ? `blur(${(p*10).toFixed(1)}px)` : "";
+  introEl.style.filter = (!mob && p > .01) ? `blur(${(p*10).toFixed(1)}px)` : "";
   ringEl.style.transform = (mob || p >= 0.999) ? "" : `scale(${(0.96 + 0.04*p).toFixed(4)})`;   // без transform — щоб fixed-плашка кріпилась до екрана
   ringEl.style.opacity = mob ? "" : (0.6 + 0.4*p).toFixed(3);
   hint.classList.toggle("off", p < .85);
   document.body.classList.toggle("scrolled", scrollY > 40);
+  gridCount();
   const rr = ringEl.getBoundingClientRect();
   document.body.classList.toggle("pin", mode === "grid" && rr.top < innerHeight - 120 && rr.bottom > innerHeight + 1);
 }
