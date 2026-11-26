@@ -117,7 +117,7 @@ a{text-decoration:none}
 body.grid.pin .bottom{position:fixed;left:0;right:0;bottom:0;z-index:60;background:linear-gradient(0deg,rgba(6,12,8,.96) 35%,rgba(6,12,8,0))}
 .clan-sec{position:relative;z-index:2;padding:48px 16px 72px}
 .clan-sec .gbanner{position:relative;left:auto!important;top:auto!important;transform:none;opacity:1;pointer-events:auto;margin:0 auto;transition:none}
-body.grid .clan-sec{display:none}
+
 .top{transition:background .3s}
 body.scrolled .top{background:linear-gradient(180deg,rgba(6,12,8,.94) 55%,rgba(6,12,8,0))}
 /* site footer */
@@ -161,7 +161,7 @@ body.scrolled .top{background:linear-gradient(180deg,rgba(6,12,8,.94) 55%,rgba(6
 .top-right{display:flex;align-items:center}
 .gbanner{position:absolute;left:50%;top:88px;transform:translate(-50%,-12px);width:min(1180px,calc(100vw - 32px));z-index:20;border-radius:22px;padding:14px 16px 14px 24px;
   display:flex;align-items:center;gap:22px;opacity:0;pointer-events:none;transition:opacity .45s,transform .6s var(--ease)}
-body.grid .gbanner{opacity:1;pointer-events:auto;transform:translate(-50%,0);transition-delay:.25s}
+
 .gbanner .kicker{font-size:12px;color:#fff;text-transform:uppercase;letter-spacing:.08em;font-weight:600}
 .gbanner h3{font-size:20px;font-weight:500;line-height:1.2;margin-top:2px}
 .gbanner .grow{flex:1;min-width:0}
@@ -532,7 +532,8 @@ body.grid .ring .hint{opacity:0}
 /* фото клану на екрані пакета — без різких обрізів по краях */
 .army-img{-webkit-mask-image:radial-gradient(closest-side,#000 62%,transparent 100%)!important;mask-image:radial-gradient(closest-side,#000 62%,transparent 100%)!important;object-position:50% 45%!important}
 @media (max-width:860px){ .army-img{-webkit-mask-image:radial-gradient(closest-side,#000 66%,transparent 100%)!important;mask-image:radial-gradient(closest-side,#000 66%,transparent 100%)!important} }
-body.grid .gbanner{transform:translate(-50%,0)!important}
+/* одна картка клану завжди на одному місці — під блоком самураїв */
+#gBanner{display:none!important}
 </style>
 </head>
 <body>
@@ -886,9 +887,8 @@ function renderGrid(){
   const gridW = Math.min(W - (mobile?24:64), 1240);
   const cellW = gridW/cols, cellH = mobile ? cellW*1.85 : (innerHeight - top - bottom)/rows;
   const gb = $("gBanner");
-  // карточка «Весь клан» — завжди під сіткою
-  gb.style.top = (top + rows*cellH + 24) + "px";
-  ringEl.style.height = (top + rows*cellH + 24 + gb.offsetHeight + bottom) + "px";
+  // карточка «Весь клан» — окремий блок під самураями (як у кільці), тут лише висота сітки
+  ringEl.style.height = (top + rows*cellH + bottom) + "px";
   const capH = mobile ? 74 : 64;
   const body = Math.min((cellH - capH)*0.76, cellW*1.9);   // figure height without crests/bow
   const left = (W - gridW)/2;
