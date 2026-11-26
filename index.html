@@ -542,6 +542,11 @@ body.grid .ring .hint{opacity:0}
 .gbanner .gb-media .avatars{position:static!important;height:auto!important;inset:auto!important}
 .gbanner .gb-media .avatars img{position:static!important;width:100%!important;height:auto!important;object-fit:fill!important;display:block}
 @media (max-width:860px){ .gbanner .gb-media{align-self:stretch!important} .gb-body{margin-top:-18px!important} }
+/* Safari: без синього виділення при перетягуванні/кліку */
+body{-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+img{-webkit-user-select:none;user-select:none;-webkit-user-drag:none;-webkit-touch-callout:none}
+img::selection,.stage *::selection,.ring *::selection{background:transparent}
+.d-desc,.d-sec,.site-foot,.wl input{-webkit-user-select:text;user-select:text}
 </style>
 </head>
 <body>
