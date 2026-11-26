@@ -537,6 +537,11 @@ body.grid .ring .hint{opacity:0}
 /* Safari: м'які краї вже «запечені» у фото — CSS-маски вимкнено */
 .gbanner .gb-media .avatars img,.m-av img,.army-img{-webkit-mask-image:none!important;mask-image:none!important}
 .gbanner .gb-media .avatars img{object-fit:contain!important}
+/* Safari: висоту блоку з фото задає сама картинка (без absolute / aspect-ratio) */
+.gbanner .gb-media{aspect-ratio:auto!important;min-height:0!important;height:auto!important;align-self:center!important;margin:0!important}
+.gbanner .gb-media .avatars{position:static!important;height:auto!important;inset:auto!important}
+.gbanner .gb-media .avatars img{position:static!important;width:100%!important;height:auto!important;object-fit:fill!important;display:block}
+@media (max-width:860px){ .gbanner .gb-media{align-self:stretch!important} .gb-body{margin-top:-18px!important} }
 </style>
 </head>
 <body>
