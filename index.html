@@ -1,0 +1,1074 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Asta Academy — Самураї</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0f0c;
+  --bg2:#0d1a12;
+  --ink:#f3f6f1;
+  --muted:#9aa89e;
+  --line:#1f8a3a;
+  --line-soft:rgba(46,160,80,.35);
+  --green:#1f8f3e;
+  --lime:#c3dd95;
+  --gold:#d8b35a;
+  --card:rgba(16,28,20,.72);
+  --ease:cubic-bezier(.22,.8,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{min-height:100%}
+body{
+  background:radial-gradient(120% 90% at 50% 75%, #0f2a18 0%, var(--bg2) 35%, var(--bg) 70%);
+  color:var(--ink);font-family:"Onest",system-ui,sans-serif;background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;user-select:none;
+}
+button,a{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer}
+a{text-decoration:none}
+:focus-visible{outline:2px solid var(--lime);outline-offset:3px;border-radius:8px}
+
+/* ---------- chrome ---------- */
+.top,.bottom{position:absolute;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:0 32px;z-index:50;pointer-events:none}
+.top>*,.bottom>*{pointer-events:auto}
+.top{position:fixed;top:0;height:82px}
+.bottom{bottom:0;height:90px}
+.menu-btn{font-size:15px;font-weight:500;letter-spacing:.02em;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+.menu-btn i{display:block;width:18px;height:2px;background:currentColor;box-shadow:0 6px 0 currentColor;transform:translateY(-3px)}
+.logo{position:absolute;left:50%;top:16px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:4px;font-weight:600;font-size:17px}
+.logo img{width:30px;height:24px}
+.pill{border:1px solid var(--line);border-radius:999px;padding:9px 20px;font-size:14px;transition:background .25s,color .25s}
+.pill:hover{background:var(--line);}
+.counter{font-weight:600;font-size:16px;font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:16px}
+.counter b{color:var(--lime);font-weight:600}
+.progress{width:120px;height:2px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden}
+.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--lime));transition:width .6s var(--ease)}
+.view{display:flex;gap:4px;padding:4px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(10,18,13,.6);backdrop-filter:blur(8px)}
+.view button{display:flex;align-items:center;gap:8px;height:36px;padding:0 14px;border-radius:999px;font-size:14px;font-weight:500;color:#cfd8d1;transition:background .25s,color .25s}
+.view button svg{flex:none}
+.view button.on{background:linear-gradient(90deg,#16883a,#4fa553);color:#fff}
+.view button:not(.on):hover{color:#fff}
+
+/* ---------- ring ---------- */
+.ring{position:relative;height:100vh;height:100svh;overflow:hidden;transform-origin:50% 0}
+.stage{position:absolute;inset:0;z-index:1;touch-action:pan-y;cursor:grab}
+.stage.dragging{cursor:grabbing}
+.halo{position:absolute;left:50%;bottom:8%;width:min(70vw,900px);aspect-ratio:2.2/1;transform:translateX(-50%);
+  background:radial-gradient(closest-side,rgba(60,200,90,.22),transparent);filter:blur(10px);pointer-events:none}
+/* intro */
+.intro{position:relative;z-index:0;padding:128px 16px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;will-change:transform,opacity}
+.intro-in{padding-top:0}
+.i-kick{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:22px;opacity:0;animation:fadeUp 1s var(--ease) .1s forwards}
+.i-title{font-size:clamp(52px,9vw,150px);line-height:.96}
+.i-title span{display:block;opacity:0;filter:blur(18px);transform:translateY(.25em) scale(.98);animation:reveal 1.4s var(--ease) forwards}
+.i-title .l1{animation-delay:.25s}
+.i-title .l2{animation-delay:.55s}
+.i-sub{max-width:520px;margin:26px auto 0;color:#c8d2ca;font-size:clamp(15px,1.3vw,18px);line-height:1.5;opacity:0;animation:fadeUp 1s var(--ease) 1.1s forwards}
+@keyframes reveal{to{opacity:1;filter:blur(0);transform:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.i-cue{position:absolute;bottom:48px;left:0;right:0;margin:0 auto;width:max-content;display:flex;flex-direction:column;align-items:center;gap:10px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#cfd8d1;opacity:0;animation:fadeUp 1s var(--ease) 1.6s forwards}
+.i-cue i{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.25);display:grid;place-items:center;animation:bob 1.8s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(6px)}}
+
+.m-clan{width:min(980px,100%);margin:0 auto 22px;display:flex;align-items:center;gap:18px;padding:12px 20px 12px 16px;border-radius:20px;text-align:left;transition:transform .2s}
+.m-clan:hover{transform:translateY(-2px)}
+.m-av{display:flex;height:58px;align-items:flex-end;padding-left:12px}
+.m-av img{position:relative;margin-left:-12px;filter:drop-shadow(0 4px 6px rgba(0,0,0,.6))}
+.m-tx{flex:1}.m-tx b{display:block;font-size:17px;font-weight:600}.m-tx small{color:var(--muted);font-size:13px}
+.m-pr{text-align:right;line-height:1.1}.m-pr s{display:block;color:var(--muted);font-size:13px}.m-pr strong{font-size:24px;color:#fff;text-shadow:0 0 20px rgba(195,221,149,.45)}
+@media (max-width:860px){.m-av{display:none}}
+@media (max-width:860px){
+  .intro{height:auto;padding:96px 16px 0}
+  .intro-in{padding-top:0;-webkit-mask-image:none;mask-image:none}
+  .i-cue{display:none}
+  .i-kick{margin-bottom:14px;font-size:11.5px}
+  .i-title{font-size:clamp(46px,15vw,84px)}
+  .i-sub{margin-top:14px;font-size:14.5px}
+}
+.i-offer{display:flex;align-items:center;gap:18px;margin:30px auto 0;padding:14px 22px 14px 18px;border-radius:22px;text-align:left;max-width:560px;width:100%;
+  opacity:0;animation:fadeUp 1s var(--ease) 1.35s forwards;transition:transform .25s}
+.i-offer:hover{transform:translateY(-3px)}
+.io-av{display:flex;align-items:flex-end;height:74px;padding-left:14px;flex:none}
+.io-av img{height:74px;margin-left:-14px;filter:drop-shadow(0 4px 6px rgba(0,0,0,.6))}
+.io-tx{flex:1;display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+.io-tx .o-badge{font-size:11px;padding:4px 10px}
+.io-tx b{font-size:19px;font-weight:600}
+.io-tx small{color:#c8d2ca;font-size:13px}
+.io-pr{display:flex;flex-direction:column;align-items:flex-end;line-height:1.05}
+.io-pr s{color:var(--muted);font-size:14px}
+.io-pr strong{font-size:34px;font-weight:700;background:linear-gradient(90deg,#fff,var(--lime));-webkit-background-clip:text;background-clip:text;color:transparent}
+.io-pr em{font-style:normal;font-size:13px;font-weight:600;color:var(--lime);margin-top:4px}
+@media (max-width:860px){
+  .i-offer{flex-wrap:wrap;gap:12px 14px;padding:16px;margin-top:22px}
+  .io-av{order:3;width:100%;justify-content:center;height:84px}.io-av img{height:84px}
+  .io-pr strong{font-size:30px}
+}
+@media (prefers-reduced-motion:reduce){.i-offer{opacity:1!important}}
+body.grid.pin .bottom{position:fixed;left:0;right:0;bottom:0;z-index:60;background:linear-gradient(0deg,rgba(6,12,8,.96) 35%,rgba(6,12,8,0))}
+.clan-sec{position:relative;z-index:2;padding:48px 16px 72px}
+.clan-sec .gbanner{position:static;transform:none;opacity:1;pointer-events:auto;margin:0 auto;transition:none}
+body.grid .clan-sec{display:none}
+.top{transition:background .3s}
+body.scrolled .top{background:linear-gradient(180deg,rgba(6,12,8,.94) 55%,rgba(6,12,8,0))}
+/* site footer */
+.site-foot{position:relative;z-index:2;border-top:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(5,10,7,.4),#040705 60%);padding:56px 0 28px;user-select:text}
+.sf-in{width:min(1240px,calc(100% - 64px));margin:0 auto;display:grid;grid-template-columns:1fr auto 1fr;gap:36px 40px;align-items:start}
+.sf-logo{display:flex;align-items:center;gap:12px;font-weight:700;font-size:20px;line-height:1.05;white-space:nowrap}
+.sf-logo img{width:40px;height:32px}
+.sf-tag{color:var(--muted);font-size:13.5px;margin-top:14px;max-width:270px;line-height:1.5}
+.sf-nav{display:flex;justify-content:center;padding-top:2px}
+.sf-site{height:50px;padding:0 28px;font-size:15px}
+.sf-nav a{font-size:15px;color:#dfe6e0;transition:color .2s}
+.sf-nav a:hover,.sf-nav a.cur{color:var(--lime)}
+.sf-nav a.cur::before{content:"● ";font-size:9px;vertical-align:2px}
+.sf-right{justify-self:end;display:flex;flex-direction:column;align-items:flex-end;gap:20px}
+.sf-soc{display:flex;gap:10px}
+.sf-soc a{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);transition:background .2s,color .2s,transform .2s}
+.sf-soc a:hover{background:var(--lime);color:#0b1a0f;transform:translateY(-2px)}
+.sf-mail{text-align:right}
+.sf-mail small{display:block;color:var(--muted);font-size:12.5px;margin-bottom:4px}
+.sf-mail a{font-size:16px;border-bottom:1px solid rgba(255,255,255,.3);transition:color .2s,border-color .2s}
+.sf-mail a:hover{color:var(--lime);border-color:var(--lime)}
+.sf-bot{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding-top:22px;border-top:1px solid rgba(255,255,255,.06);color:var(--muted);font-size:13px}
+.sf-bot nav{display:flex;gap:22px}
+.sf-bot a:hover,.sf-up:hover{color:var(--ink)}
+.sf-up{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:13px}
+.sf-up i{width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,.18);display:grid;place-items:center}
+@media (max-width:860px){
+  .sf-in{grid-template-columns:1fr;text-align:center;justify-items:center;width:calc(100% - 32px)}
+  .sf-logo{justify-content:center}.sf-tag{margin-inline:auto}.sf-right{justify-self:center;align-items:center}.sf-mail{text-align:center}
+  .sf-bot{flex-direction:column}
+}
+
+/* offer */
+.offer-pill{display:inline-flex;align-items:center;gap:10px;height:37px;padding:0 6px 0 16px;border-radius:999px;font-size:14px;font-weight:500;margin-right:10px;
+  border-color:rgba(195,221,149,.45);transition:transform .2s,border-color .2s;position:relative;overflow:hidden}
+.offer-pill::before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(195,221,149,.25) 50%,transparent 70%);transform:translateX(-100%);animation:shine 3.6s ease-in-out infinite}
+@keyframes shine{60%,100%{transform:translateX(100%)}}
+.offer-pill:hover{transform:translateY(-1px);border-color:var(--lime)}
+.offer-pill .op-t{display:inline-flex;align-items:center;gap:8px}
+.offer-pill em{font-style:normal;padding:4px 10px;border-radius:999px;background:var(--lime);color:#0b1a0f;font-weight:700;font-size:12.5px}
+.top-right{display:flex;align-items:center}
+.gbanner{position:absolute;left:50%;top:88px;transform:translate(-50%,-12px);width:min(1180px,calc(100vw - 32px));z-index:20;border-radius:22px;padding:14px 16px 14px 24px;
+  display:flex;align-items:center;gap:22px;opacity:0;pointer-events:none;transition:opacity .45s,transform .6s var(--ease)}
+body.grid .gbanner{opacity:1;pointer-events:auto;transform:translate(-50%,0);transition-delay:.25s}
+.gbanner .kicker{font-size:12px;color:#fff;text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+.gbanner h3{font-size:20px;font-weight:500;line-height:1.2;margin-top:2px}
+.gbanner .grow{flex:1;min-width:0}
+.gbanner .avatars{display:flex;height:64px;align-items:flex-end;justify-content:center;padding-left:14px}
+.gbanner .avatars img{position:relative;margin-left:-14px;filter:drop-shadow(0 4px 6px rgba(0,0,0,.6))}
+.gbanner .pr{text-align:right;line-height:1.1}
+.gbanner .pr s{color:rgba(255,255,255,.6);font-size:14px}
+.gbanner .pr strong{display:block;font-size:30px;font-weight:700;color:#fff;text-shadow:0 0 24px rgba(195,221,149,.35)}
+.gbanner .btn{height:48px;padding:0 26px}
+
+.bundle{position:fixed;inset:0;z-index:72;display:flex;flex-direction:column;padding:70px 0 0;overflow-y:auto;overflow-x:hidden;
+  background:radial-gradient(60% 50% at 50% 85%,rgba(60,200,90,.30),transparent 65%),radial-gradient(120% 90% at 50% 75%,#0f2a18 0%,var(--bg2) 35%,var(--bg) 70%);
+  opacity:0;visibility:hidden;transition:opacity .45s var(--ease),visibility .45s}
+.bundle.open{opacity:1;visibility:visible}
+@property --ang{syntax:"<angle>";initial-value:0deg;inherits:false}
+.hot{position:relative;isolation:isolate}
+.hot::before{content:"";position:absolute;inset:-1.5px;border-radius:inherit;padding:1.5px;z-index:-1;
+  background:conic-gradient(from var(--ang),rgba(195,221,149,.15),var(--lime),#3fd46a,rgba(195,221,149,.15) 40%,rgba(195,221,149,.15) 60%,#3fd46a,var(--lime),rgba(195,221,149,.15));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:spinb 5s linear infinite}
+.hot::after{content:"";position:absolute;inset:-30px;border-radius:inherit;z-index:-2;background:radial-gradient(60% 80% at 75% 50%,rgba(80,220,110,.30),transparent 70%);filter:blur(20px);pointer-events:none}
+@keyframes spinb{to{--ang:360deg}}
+.hot{background:linear-gradient(120deg,rgba(40,140,70,.35),rgba(12,30,18,.75) 45%,rgba(60,170,80,.30)),rgba(10,22,14,.6)!important}
+.btn.pulse{animation:btnpulse 2.2s ease-in-out infinite}
+@keyframes btnpulse{0%,100%{box-shadow:0 10px 30px -10px rgba(60,190,90,.6),0 0 0 0 rgba(195,221,149,.45)}50%{box-shadow:0 14px 40px -8px rgba(90,220,110,.8),0 0 0 10px rgba(195,221,149,0)}}
+.o-buy strong{color:#fff}
+.bundle .offer{position:relative;z-index:5;width:min(1080px,calc(100% - 64px));margin:-30vh auto 64px;border-radius:26px;padding:24px 26px;display:grid;grid-template-columns:1.4fr auto auto;gap:28px;align-items:center;
+  transform:translateY(-16px);opacity:0;transition:transform .7s var(--ease) .1s,opacity .6s .1s}
+.bundle.open .offer{transform:none;opacity:1}
+.bundle .offer h2{font-size:clamp(24px,2.6vw,36px);font-weight:500;line-height:1.08;margin:10px 0 8px}
+.bundle .offer p{color:#c8d2ca;font-size:15px;line-height:1.5;max-width:520px}
+.o-badge{display:inline-flex;gap:8px;align-items:center;padding:5px 12px;border-radius:999px;background:linear-gradient(90deg,#16883a,var(--lime));color:#08140c;font-weight:700;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase}
+.o-stats{display:grid;grid-template-columns:repeat(3,auto);gap:8px}
+.o-stats .stat{min-width:96px}
+.o-buy{display:grid;gap:10px;justify-items:stretch;min-width:240px}
+.o-buy .pp{display:flex;align-items:baseline;gap:12px;justify-content:center}
+.o-buy s{color:var(--muted);font-size:18px}
+.o-buy strong{font-size:52px;font-weight:600;letter-spacing:-.02em;text-shadow:0 0 30px rgba(120,220,130,.35)}
+.o-buy .save{font-size:12.5px;color:rgba(255,255,255,.75);text-align:center}
+.o-buy .btn{height:56px;font-size:17px}
+.army{position:relative;z-index:1;flex:none;height:max(460px,calc(100vh - 110px));width:min(1280px,100%);margin:0 auto}
+.army .disk{top:auto;bottom:22%;transform:translate(-50%,0)}
+.army .u{position:absolute;bottom:0;transform-origin:50% 100%;opacity:0;transform:translate(calc(var(--cx,.5) * -100%),40px);transition:opacity .6s,transform .9s var(--ease)}
+.bundle.open .army .u{opacity:1;transform:translate(calc(var(--cx,.5) * -100%),0)}
+.army .u img{height:100%;display:block}
+.army .u.hero img{filter:drop-shadow(0 0 40px rgba(80,220,110,.35))}
+
+/* 3D disk platform */
+.disk{position:absolute;left:50%;top:var(--floorY,60%);width:var(--floorW,1000px);height:var(--floorH,500px);transform:translate(-50%,-50%);pointer-events:none;transition:opacity .6s,transform .8s var(--ease)}
+.disk>*{position:absolute;left:0;width:100%}
+.disk .shadow{top:calc(var(--floorH) * .45 + var(--thick));height:100%;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.7),transparent);filter:blur(18px);transform:scale(1.05,.9)}
+.disk .side,.disk .top{-webkit-mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.15) 35%,#000 78%);mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.15) 35%,#000 78%)}
+.disk .side{top:0;height:calc(100% + var(--thick));border-radius:50% / calc(var(--floorH) / 2);
+  background:linear-gradient(90deg,rgba(4,10,6,0) 0%,#0b2213 20%,#16391f 50%,#0b2213 80%,rgba(4,10,6,0) 100%)}
+.disk .top{top:0;height:100%;border-radius:50%;
+  background:radial-gradient(70% 70% at 50% 75%,rgba(70,210,100,.22),transparent 70%),radial-gradient(closest-side,#112a18 0%,#0c2013 70%,#0a1a10 100%);
+  box-shadow:inset 0 -2px 0 rgba(160,240,170,.28),inset 0 -18px 30px rgba(0,0,0,.35)}
+body.grid .disk{opacity:0;transform:translate(-50%,-30%) scale(.9)}
+.sam{position:absolute;left:0;top:0;transform-origin:50% 100%;will-change:transform,filter,opacity}
+.sam img{display:block;height:100%;width:auto;pointer-events:none;-webkit-user-drag:none;position:relative}
+.sam .foot{position:absolute;left:50%;bottom:-1.5%;width:62%;height:7%;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.8),transparent);pointer-events:none}
+.sam .cap{position:absolute;left:50%;top:100%;transform:translate(-50%,6px);width:var(--capW,180px);text-align:center;font-size:12.5px;line-height:1.3;color:#dfe6e0;
+  opacity:0;pointer-events:none;transition:opacity .3s;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.sam .cap b{color:var(--lime);font-weight:600;margin-right:4px}
+body.grid .sam .cap{opacity:1;transition-delay:.45s}
+body.grid .sam .tag,body.grid .sam .foot{display:none}
+body.anim .sam{transition:transform .85s var(--ease),height .85s var(--ease),width .85s var(--ease),filter .6s,opacity .6s}
+body.grid .sam button{transition:transform .3s var(--ease),filter .3s}
+body.grid .sam:hover button{transform:translateY(-6px);filter:brightness(1.15) drop-shadow(0 0 24px rgba(60,200,90,.35))}
+body.grid .card,body.grid .nav,body.grid .hint,body.grid .halo{opacity:0;pointer-events:none}
+.card,.nav,.halo{transition:opacity .4s}
+body.grid .stage{cursor:default}
+.sam button{display:block;height:100%;cursor:pointer}
+.sam .tag{position:absolute;left:50%;top:-6px;transform:translate(-50%,-100%);font-size:12px;font-weight:600;padding:4px 9px;border-radius:999px;
+  background:rgba(10,20,14,.8);border:1px solid var(--line-soft);opacity:0;transition:opacity .2s;white-space:nowrap;pointer-events:none}
+.sam:hover .tag{opacity:1}
+.sam.is-active .tag{display:none}
+
+/* ---------- active card ---------- */
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.015) 40%),rgba(12,24,16,.62);border:1px solid rgba(255,255,255,.12);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 20px 60px -20px rgba(0,0,0,.7);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2)}
+.card{position:absolute;left:50%;bottom:44px;transform:translateX(-50%);width:min(440px,calc(100vw - 32px));z-index:30;
+  padding:42px 18px 18px;border-radius:22px;text-align:center}
+.num{position:absolute;left:50%;top:0;transform:translate(-50%,-50%);width:68px;height:68px;border-radius:50%;
+  border:2px solid var(--line);display:grid;place-items:center;font-weight:600;font-size:16px;background:var(--bg)}
+.num::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:1px solid var(--line-soft);animation:pulse 2.6s var(--ease) infinite}
+@keyframes pulse{0%{transform:scale(.9);opacity:.9}100%{transform:scale(1.25);opacity:0}}
+.card h1{font-size:21px;line-height:1.15;font-weight:500;min-height:2.3em;display:flex;align-items:center;justify-content:center}
+.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0 14px;text-align:left}
+.meta .stat{padding:9px 11px;border-radius:12px}
+.meta .stat small{font-size:11px;margin-bottom:2px}
+.meta .stat strong{font-size:15px}
+.stat.is-free{background:rgba(195,221,149,.12);border:1px solid rgba(195,221,149,.5);box-shadow:0 0 22px -6px rgba(195,221,149,.55)}
+.stat.is-free strong{color:var(--lime)}
+.stat.is-off strong{color:var(--gold)}
+.free-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:var(--lime);color:#0b1a0f;font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 0 18px rgba(195,221,149,.6)}
+.card .btn{height:48px}
+.chip{font-size:12.5px;padding:5px 11px;border-radius:999px;border:1px solid rgba(255,255,255,.14);color:#cfd8d1;display:inline-flex;align-items:center;gap:6px}
+.chip.free{border-color:var(--lime);color:var(--lime)}
+.chip.off{border-color:#7a6a3a;color:var(--gold)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:52px;padding:0 44px;border-radius:999px;font-weight:600;font-size:16px;
+  background:linear-gradient(90deg,#16883a 0%,#5fb35a 55%,var(--lime) 100%);color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.25);
+  box-shadow:0 10px 30px -10px rgba(60,190,90,.6);transition:transform .2s,box-shadow .2s,filter .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 16px 36px -10px rgba(90,210,110,.75);filter:brightness(1.06)}
+.btn.ghost{background:transparent;border:1px solid var(--line);box-shadow:none;text-shadow:none}
+.btn[aria-disabled=true]{opacity:.55;pointer-events:none}
+.swap{transition:opacity .25s,transform .35s var(--ease)}
+.swap.out{opacity:0;transform:translateY(6px)}
+
+/* scroll hint & arrows */
+.hint{position:fixed;z-index:31;width:100px;height:100px;border-radius:50%;border:1px solid rgba(255,255,255,.28);display:grid;place-items:center;
+  font-size:13px;font-weight:500;pointer-events:none;left:calc(50% + 130px);top:calc(50% + 0px);transform:translate(-50%,-50%);
+  transition:opacity .5s, left .12s linear, top .12s linear;backdrop-filter:blur(2px)}
+.hint svg{position:absolute;inset:-1px;animation:spin 9s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hint.hide,.hint.off{opacity:0}
+.nav{position:absolute;top:50%;z-index:31;width:54px;height:54px;border-radius:50%;border:1px solid rgba(255,255,255,.18);display:grid;place-items:center;
+  transform:translateY(-50%);transition:border-color .2s,background .2s}
+.nav:hover{border-color:var(--line);background:rgba(31,143,62,.18)}
+.nav.prev{left:28px}.nav.next{right:28px}
+
+/* ---------- menu overlay ---------- */
+.menu{position:fixed;inset:0;z-index:80;background:rgba(6,10,8,.92);backdrop-filter:blur(14px);display:flex;flex-direction:column;
+  padding:100px 32px 40px;opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
+.menu.open{opacity:1;visibility:visible}
+.menu .close{position:absolute;top:24px;left:32px}
+.filters{display:flex;gap:8px;justify-content:center;margin-bottom:28px;flex-wrap:wrap}
+.filters button{padding:8px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.16);font-size:14px}
+.filters button.on{background:var(--line);border-color:var(--line)}
+.list{max-width:980px;width:100%;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:10px;overflow:auto;padding-bottom:20px}
+.row{display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:14px;border:1px solid rgba(255,255,255,.07);
+  text-align:left;transition:border-color .2s,background .2s,transform .2s}
+.row:hover{border-color:var(--line);background:rgba(31,143,62,.08);transform:translateY(-2px)}
+.row .thumb{width:44px;height:64px;flex:none;display:grid;place-items:end center;overflow:hidden}
+.row .thumb img{height:100%}
+.row b{display:block;font-size:12px;color:var(--lime);font-weight:600;margin-bottom:2px}
+.row span{display:block;font-size:15px;line-height:1.25}
+.row small{display:block;color:var(--muted);font-size:12.5px;margin-top:4px}
+.row.dim{opacity:.25;pointer-events:none}
+
+/* ---------- detail ---------- */
+.detail{position:fixed;inset:0;z-index:70;display:grid;grid-template-columns:1fr minmax(300px,520px) 1fr;align-items:center;gap:24px;padding:110px 32px 100px;
+  background:radial-gradient(70% 60% at 50% 80%, rgba(40,170,70,.28), transparent 60%), radial-gradient(120% 90% at 50% 75%, #0f2a18 0%, var(--bg2) 35%, var(--bg) 70%);
+  opacity:0;visibility:hidden;transition:opacity .45s var(--ease),visibility .45s}
+.detail.gold{background:radial-gradient(70% 60% at 50% 80%, rgba(216,179,90,.22), transparent 60%), radial-gradient(120% 90% at 50% 75%, #22200f 0%, #14140c 35%, var(--bg) 70%)}
+.detail.open{opacity:1;visibility:visible}
+.d-left{align-self:stretch;display:flex;flex-direction:column;gap:20px;max-width:480px;overflow:auto;padding-right:6px;padding-bottom:40px;-webkit-mask-image:linear-gradient(to bottom,#000 calc(100% - 60px),transparent);mask-image:linear-gradient(to bottom,#000 calc(100% - 60px),transparent);scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.15) transparent}
+.d-sec h4{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:10px}
+.d-mod{list-style:none;display:grid;gap:8px;counter-reset:m}
+.d-mod li{counter-increment:m;display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);font-size:14.5px;line-height:1.35;color:#e3e9e4}
+.d-mod li::before{content:counter(m,decimal-leading-zero);flex:none;font-size:12px;font-weight:600;color:var(--lime);margin-top:2px}
+.d-for{display:flex;flex-wrap:wrap;gap:6px}
+.d-for span{font-size:13px;padding:6px 11px;border-radius:999px;border:1px solid rgba(195,221,149,.28);color:#dbe6cf}
+.d-res{padding:14px 16px;border-radius:14px;border-left:2px solid var(--lime);background:linear-gradient(90deg,rgba(195,221,149,.08),transparent);font-size:14.5px;line-height:1.5;color:#e3e9e4}
+.d-how{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.d-how div{font-size:13px;color:#c8d2ca;display:flex;gap:8px;align-items:center}
+.d-how i{font-style:normal;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:rgba(31,143,62,.22);color:var(--lime);flex:none;font-size:13px}
+.d-head{display:flex;flex-direction:column;gap:16px;align-items:flex-start}
+.d-head .num{position:relative;left:auto;top:auto;transform:none;flex:none}
+.d-head .num{width:54px;height:54px;font-size:14px}
+.d-head h2,.caps{font-family:"Inter",sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:-.015em;line-height:.98}
+.d-head h2{font-size:clamp(26px,2.5vw,40px)}
+.d-head h2 span{text-wrap:balance}
+.d-head h2 span{display:block}
+.hl{background:linear-gradient(90deg,#7fdc63 0%,#a6e27a 50%,var(--lime) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.detail.gold .hl{background-image:linear-gradient(90deg,#d6a840,#f3d98d)}
+.d-desc{color:#c8d2ca;font-size:16px;line-height:1.55}
+.d-points{list-style:none;display:grid;gap:10px}
+.d-points li{display:flex;gap:10px;font-size:15px;line-height:1.4;color:#dfe6e0}
+.d-points li::before{content:"";flex:none;width:8px;height:8px;margin-top:6px;border-radius:50%;background:var(--lime);box-shadow:0 0 10px var(--lime)}
+.d-img{height:100%;max-height:78vh;display:flex;justify-content:center;align-items:flex-end;position:relative}
+.d-img img{height:calc(100% * var(--k,1));max-height:min(calc(78vh * var(--k,1)), calc(100vh - 40px));width:auto;filter:drop-shadow(0 30px 40px rgba(0,0,0,.6))}
+.detail .d-left,.detail .d-right,.detail .d-close{opacity:0;transform:translateY(16px);transition:opacity .3s ease,transform .5s var(--ease)}
+.detail.open .d-left,.detail.open .d-right,.detail.open .d-close{opacity:1;transform:none;transition:opacity .5s ease .38s,transform .7s var(--ease) .38s}
+.detail.open .d-right{transition-delay:.48s}
+.flyer{position:fixed;z-index:90;transform-origin:0 0;pointer-events:none;filter:drop-shadow(0 30px 40px rgba(0,0,0,.6))}
+.sam{transition:opacity .4s ease}
+body.focus .sam,.sam.is-flying{opacity:0!important}
+body.focus .card,body.focus .nav,body.focus .bottom,body.focus .gbanner{opacity:0!important;pointer-events:none}
+.d-img::after{content:"";position:absolute;bottom:-14px;left:50%;width:70%;height:40px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.7),transparent)}
+.d-right{justify-self:end;width:100%;max-width:340px;align-self:end;display:flex;flex-direction:column;gap:14px}
+.d-upsell{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;font-size:13.5px;line-height:1.3;transition:border-color .2s,transform .2s}
+.d-upsell:hover{border-color:var(--lime);transform:translateY(-2px)}
+.d-upsell .ic{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#16883a,var(--lime));color:#0b1a0f;font-weight:700}
+.d-upsell b{color:#fff}
+.buy{border-radius:22px;padding:24px;display:grid;gap:16px}
+.buy .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{padding:12px;border-radius:14px;background:rgba(255,255,255,.04)}
+.stat small{display:block;color:var(--muted);font-size:12px;margin-bottom:4px}
+.stat strong{font-size:17px;font-weight:600}
+.price{display:flex;align-items:baseline;justify-content:space-between}
+.price small{color:var(--muted);font-size:13px}
+.price strong{font-size:30px;font-weight:600;letter-spacing:-.01em}
+.price strong.free{color:var(--lime);font-size:24px;text-shadow:0 0 24px rgba(195,221,149,.55)}
+.price strong.soft{font-size:16px;font-weight:500;color:var(--muted)}
+.buy .btn{width:100%;padding:0 20px}
+.wl{display:grid;gap:10px}
+.wl input{height:50px;border-radius:14px;border:1px solid rgba(255,255,255,.16);background:rgba(0,0,0,.25);color:var(--ink);padding:0 16px;font:inherit;font-size:15px;outline:none}
+.wl input:focus{border-color:var(--lime)}
+.wl-ok{padding:14px;border-radius:14px;background:rgba(195,221,149,.12);border:1px solid rgba(195,221,149,.5);color:var(--lime);font-size:14px;line-height:1.4;text-align:center}
+.btn.gold{background:linear-gradient(90deg,#8a6a1e,#c79d3e 55%,#ecd28a);box-shadow:0 10px 30px -10px rgba(216,179,90,.6)}
+.buy p.note{font-size:12.5px;color:var(--muted);text-align:center}
+.d-close{position:absolute;top:24px;left:32px;display:flex;align-items:center;gap:10px;font-size:15px;text-transform:uppercase;font-weight:500}
+.d-nav{display:flex;gap:10px;justify-content:flex-end;align-items:center}
+.d-nav button{width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.18);display:grid;place-items:center}
+.d-nav button:hover{border-color:var(--line);background:rgba(31,143,62,.18)}
+.d-count{margin-right:auto;font-weight:600;font-size:16px;font-variant-numeric:tabular-nums}
+
+/* ---------- mobile ---------- */
+@media (max-width:860px){
+  .top{padding:0 16px}.bottom{padding:0 16px}
+  .logo span{font-size:14px}
+  .pill{padding:7px 14px;font-size:13px}
+  .nav,.hint{display:none}
+  .card{bottom:70px}
+  .card h1{font-size:20px}
+  .progress{width:70px}
+  .view button span{display:none}.view button{padding:0 12px}
+  .offer-pill .op-t{font-size:0;gap:0}.offer-pill .op-t svg{width:16px;height:16px}.offer-pill{padding:0 5px 0 10px;margin-right:6px}
+  .top-right .pill:not(.offer-pill){display:none}
+  .card{bottom:84px}
+  .bottom{height:72px}.meta .stat{padding:8px}.meta .stat strong{font-size:13.5px}
+  .gbanner{flex-direction:column;align-items:stretch;gap:22px;padding:32px 24px 26px;text-align:center}
+  .gbanner .kicker{justify-content:center}
+  .gbanner .avatars{display:flex;justify-content:center;height:110px;padding-left:22px}
+  .gbanner .avatars img{margin-left:-22px}
+  .gbanner h3{font-size:19px;margin-top:10px;line-height:1.35}
+  .gbanner .pr{display:flex;align-items:baseline;justify-content:center;gap:12px;text-align:center}
+  .gbanner .pr strong{font-size:40px;display:inline}
+  .gbanner .pr s{font-size:16px;order:2}
+  .gbanner .btn{height:54px;width:100%;font-size:16px}
+  .bundle{padding:64px 0 0}
+  .bundle .offer{width:calc(100% - 32px);margin-top:-16vh}
+  .bundle .offer{grid-template-columns:1fr;gap:16px;padding:18px}
+  .o-stats .stat{min-width:0}
+  .army{height:62vh}
+  .detail{grid-template-columns:1fr;grid-template-rows:auto 38vh auto;overflow:auto;padding:80px 16px 110px;align-items:start;gap:18px}
+  .d-img{order:2;height:38vh}.d-img img{max-height:calc(38vh * var(--k,1))}
+  .d-left{order:1;max-width:none}
+  .d-right{order:3;justify-self:stretch;max-width:none}
+  .d-head .num{width:56px;height:56px}
+  .d-close{left:16px}
+  .menu{padding:80px 16px 24px}.menu .close{left:16px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important;transition-delay:0s!important}.i-title span,.i-kick,.i-sub,.i-cue{opacity:1!important;filter:none!important;transform:none}}
+/* mobile detail: nav → title → samurai → info → buy (sticky button) */
+@media (max-width:860px){
+  .detail{display:flex;flex-direction:column;align-items:stretch;gap:18px;padding:70px 16px 112px;overflow-y:auto;overflow-x:hidden}
+  .detail .d-left,.detail .d-right{display:contents}
+  .d-nav{order:1;justify-content:space-between}
+  .d-nav #dPrev{order:1}.d-nav .d-count{order:2;margin:0}.d-nav #dNext{order:3}
+  .d-head{order:2;align-items:center;text-align:center}
+  .d-head .num{width:46px;height:46px;font-size:13px}
+  .d-head h2{font-size:clamp(24px,7.6vw,34px)}
+  .d-img{order:3;height:calc(48vh * var(--k,1));flex:none}
+  .d-img img{height:100%;max-height:none}
+  .d-desc{order:4}.d-sec{order:5}
+  .buy{order:6;-webkit-backdrop-filter:none;backdrop-filter:none}
+  .d-upsell{order:7}
+  #dBuy{position:fixed;left:16px;right:16px;bottom:16px;width:auto;z-index:80;box-shadow:0 14px 34px -6px rgba(0,0,0,.85),0 10px 30px -10px rgba(60,190,90,.6)}
+  .detail::after{content:"";position:fixed;left:0;right:0;bottom:0;height:100px;background:linear-gradient(0deg,#07100a 45%,transparent);pointer-events:none;z-index:79}
+}
+/* білий текст на зелених плашках */
+.hot,.hot p,.hot h2,.hot h3,.hot b,.hot strong,.hot .stat strong{color:#fff}
+.hot small,.hot .stat small,.hot .save,.hot .kicker{color:rgba(255,255,255,.82)!important}
+.hot s{color:rgba(255,255,255,.7)!important}
+.hot .stat{background:rgba(255,255,255,.07)}
+/* плавна зміна самурая в деталях */
+.detail .d-img img,.detail .d-head,.detail .d-desc,.detail .d-sec,.detail .buy .stats,.detail .buy .price,.detail .buy .note{transition:opacity .32s ease,translate .5s var(--ease)}
+.detail.swap-out .d-img img{opacity:0;translate:calc(var(--dir,1) * -70px) 0}
+.detail.swap-in .d-img img{opacity:0;translate:calc(var(--dir,1) * 70px) 0;transition:none}
+.detail.swap-out :is(.d-head,.d-desc,.d-sec,.buy .stats,.buy .price,.buy .note){opacity:0;translate:0 10px}
+.detail.swap-in :is(.d-head,.d-desc,.d-sec,.buy .stats,.buy .price,.buy .note){opacity:0;translate:0 -10px;transition:none}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <button class="menu-btn" id="openMenu" aria-label="Відкрити меню курсів"><i></i>Меню</button>
+  <a class="logo" href="#" aria-label="Asta Academy"><img src="img/logo.svg" alt=""><span>Asta Academy</span></a>
+  <div class="top-right">
+    <button class="pill glass offer-pill hot" id="openBundle"><span class="op-t"><svg class="sw" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9.3 2h5.4v2.4c2.5.8 4.3 3 4.6 5.7L22.6 15h-4c-.7 3.3-3.4 6-6.6 6s-5.9-2.7-6.6-6h-4l3.3-4.9c.3-2.7 2.1-4.9 4.6-5.7zM6.6 10.3h10.8v.8H6.6zM8.4 12.6l2.6.7-.2.9-2.6-.7zM15.6 12.6l-2.6.7.2.9 2.6-.7z"/></svg>Весь клан · 15 курсів</span><em>−55%</em></button>
+    <a class="pill" href="https://asta.academy" target="_blank" rel="noopener">На сайт</a>
+  </div>
+</header>
+
+<section class="intro" id="intro" aria-label="Шляхи самураїв">
+  <div class="intro-in">
+    <h1 class="i-title caps"><span class="l1 hl">Шляхи</span><span class="l2">самураїв</span></h1>
+    <p class="i-sub">Обери свого самурая і пройди його шлях — від ідеї та команди до переговорів і оферу.</p>
+  </div>
+</section>
+
+<section class="ring" id="ring">
+<main class="stage" id="stage" aria-label="Курси — оберіть самурая">
+  <div class="disk" id="floor"><div class="shadow"></div><div class="side"></div><div class="top"></div></div>
+  <div class="halo"></div>
+</main>
+
+<button class="nav prev" id="prev" aria-label="Попередній курс"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+<button class="nav next" id="next" aria-label="Наступний курс"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+
+<div class="hint" id="hint" aria-hidden="true">
+  <svg viewBox="0 0 102 102"><circle cx="51" cy="51" r="50" fill="none" stroke="#2ea050" stroke-width="1.5" stroke-dasharray="18 296" stroke-linecap="round"/></svg>
+  Гортай
+</div>
+
+<section class="card glass" aria-live="polite">
+  <div class="num" id="cNum">01</div>
+  <div class="swap" id="cBody">
+    <h1 id="cTitle"></h1>
+    <div class="meta" id="cMeta"></div>
+  </div>
+  <button class="btn" id="cBtn">Деталі</button>
+</section>
+
+<section class="gbanner glass hot" id="gBanner" aria-label="Пакетна пропозиція">
+  <div class="avatars" id="gAv"></div>
+  <div class="grow"><div class="kicker" style="display:flex;align-items:center;gap:6px"><svg class="sw" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9.3 2h5.4v2.4c2.5.8 4.3 3 4.6 5.7L22.6 15h-4c-.7 3.3-3.4 6-6.6 6s-5.9-2.7-6.6-6h-4l3.3-4.9c.3-2.7 2.1-4.9 4.6-5.7zM6.6 10.3h10.8v.8H6.6zM8.4 12.6l2.6.7-.2.9-2.6-.7zM15.6 12.6l-2.6.7.2.9 2.6-.7z"/></svg>Весь клан — пакет усіх курсів</div><h3>15 самураїв · 60+ годин контенту в одному доступі</h3></div>
+  <div class="pr"><s id="gOld"></s><strong id="gNew"></strong></div>
+  <button class="btn pulse" id="gBtn">Забрати всіх</button>
+</section>
+
+<footer class="bottom">
+  <div class="counter"><span><b id="cur">01</b> / 15</span><div class="progress"><span id="bar"></span></div></div>
+  <div class="view" role="group" aria-label="Вигляд">
+    <button id="vRing" class="on" aria-pressed="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="15" rx="10" ry="4.5"/><path d="M7 14V7M12 15V5M17 14V7"/></svg><span>Коло</span></button>
+    <button id="vGrid" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Сітка</span></button>
+  </div>
+</footer>
+</section>
+
+<section class="clan-sec" id="clanSec" aria-label="Пакетна пропозиція"></section>
+
+<footer class="site-foot">
+  <div class="sf-in">
+    <div>
+      <a class="sf-logo" href="#"><img src="img/logo.svg" alt=""><span>Asta Academy</span></a>
+      <p class="sf-tag">Освіта для тих, хто будує продукти та кар'єру в ІТ.</p>
+    </div>
+    <div class="sf-nav"><a class="btn sf-site" href="https://asta.academy" target="_blank" rel="noopener">Перейти на сайт <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M8 7h9v9"/></svg></a></div>
+    <div class="sf-right">
+      <div class="sf-soc">
+        <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="#" aria-label="Telegram"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.4 3.6 2.9 10.8c-1.2.5-1.2 1.2 0 1.6l4.7 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.8-1.5-1.4zM9.3 13.6l8.6-5.4c.4-.2.8-.1.5.2l-7.1 6.4-.3 3.2-1.7-4.4z"/></svg></a>
+        <a href="#" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 8.2c-.2-1.6-1-2.7-2.6-2.9C17 5 12 5 12 5s-5 0-7.4.3C3 5.5 2.2 6.6 2 8.2 1.8 9.5 1.8 12 1.8 12s0 2.5.2 3.8c.2 1.6 1 2.7 2.6 2.9C7 19 12 19 12 19s5 0 7.4-.3c1.6-.2 2.4-1.3 2.6-2.9.2-1.3.2-3.8.2-3.8s0-2.5-.2-3.8zM10 15V9l5.2 3L10 15z"/></svg></a>
+      </div>
+      <div class="sf-mail"><small>Електронна пошта</small><a href="mailto:info@asta.academy">info@asta.academy</a></div>
+    </div>
+    <div class="sf-bot">
+      <span>© <span class="yr"></span> Asta Academy. All rights reserved.</span>
+      <nav><a href="#">Публічна оферта</a><a href="#">Privacy policy</a></nav>
+      <button class="sf-up" type="button"><span>Нагору</span><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M6 11l6-6 6 6"/></svg></i></button>
+    </div>
+  </div>
+</footer>
+
+<!-- menu -->
+<nav class="menu" id="menu" aria-label="Усі курси">
+  <button class="menu-btn close" id="closeMenu">✕&nbsp; Закрити</button>
+  <button class="m-clan glass hot" id="mClan">
+    <span class="m-av" id="mAv"></span>
+    <span class="m-tx"><b>Весь клан · 15 самураїв</b><small>Усі курси в одному доступі</small></span>
+    <span class="m-pr"><s id="mOld"></s><strong id="mNew"></strong></span>
+  </button>
+  <div class="filters" id="filters">
+    <button data-f="all" class="on">Усі · 15</button>
+    <button data-f="paid">Платні</button>
+    <button data-f="free">Безкоштовні</button>
+  </div>
+  <div class="list" id="list"></div>
+</nav>
+
+<!-- detail -->
+<section class="detail" id="detail" role="dialog" aria-modal="true" aria-labelledby="dTitle">
+  <button class="d-close" id="dClose"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>До всіх самураїв</button>
+  <div class="d-left">
+    <div class="d-head"><span id="dNum" hidden></span><h2 id="dTitle"></h2></div>
+    <p class="d-desc" id="dDesc"></p>
+    <div class="d-sec"><h4>Програма</h4><ol class="d-mod" id="dPoints"></ol></div>
+    <div class="d-sec"><h4>Для кого</h4><div class="d-for" id="dFor"></div></div>
+    <div class="d-sec"><h4>Результат</h4><div class="d-res" id="dRes"></div></div>
+    <div class="d-sec"><h4>Як проходить</h4><div class="d-how" id="dHow"></div></div>
+  </div>
+  <div class="d-img"><img id="dImg" alt=""></div>
+  <aside class="d-right">
+    <div class="buy glass">
+      <div class="stats">
+        <div class="stat"><small>Тривалість</small><strong id="dHours"></strong></div>
+        <div class="stat"><small>Формат</small><strong id="dFormat"></strong></div>
+      </div>
+      <div class="price"><small>Вартість</small><strong id="dPrice"></strong></div>
+      <a class="btn" id="dBuy" href="#" target="_blank" rel="noopener"></a>
+      <form class="wl" id="wl" hidden>
+        <input id="wlIn" type="text" inputmode="email" placeholder="Email або @telegram" required aria-label="Email або Telegram">
+        <button class="btn" type="submit">Повідомте мене</button>
+      </form>
+      <div class="wl-ok" id="wlOk" hidden>✓ Ви в списку — напишемо, щойно відкриється реєстрація на наступну зустріч</div>
+      <p class="note" id="dNote"></p>
+    </div>
+    <button class="d-upsell glass hot" id="dUpsell"><span class="ic"><svg class="sw" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9.3 2h5.4v2.4c2.5.8 4.3 3 4.6 5.7L22.6 15h-4c-.7 3.3-3.4 6-6.6 6s-5.9-2.7-6.6-6h-4l3.3-4.9c.3-2.7 2.1-4.9 4.6-5.7zM6.6 10.3h10.8v.8H6.6zM8.4 12.6l2.6.7-.2.9-2.6-.7zM15.6 12.6l-2.6.7.2.9 2.6-.7z"/></svg></span><span>Або весь клан — <b id="dUpPrice"></b> за всі 15 курсів</span></button>
+    <div class="d-nav">
+      <div class="d-count"><b id="dCur" style="color:var(--lime)">01</b> / 15</div>
+      <button id="dPrev" aria-label="Попередній курс"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button id="dNext" aria-label="Наступний курс"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+    </div>
+  </aside>
+</section>
+
+<!-- bundle -->
+<section class="bundle" id="bundle" role="dialog" aria-modal="true" aria-labelledby="bTitle">
+  <button class="d-close" id="bClose"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>До всіх самураїв</button>
+  <div class="army" id="army"></div>
+  <div class="offer glass hot">
+    <div>
+      <span class="o-badge"><svg class="sw" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9.3 2h5.4v2.4c2.5.8 4.3 3 4.6 5.7L22.6 15h-4c-.7 3.3-3.4 6-6.6 6s-5.9-2.7-6.6-6h-4l3.3-4.9c.3-2.7 2.1-4.9 4.6-5.7zM6.6 10.3h10.8v.8H6.6zM8.4 12.6l2.6.7-.2.9-2.6-.7zM15.6 12.6l-2.6.7.2.9 2.6-.7z"/></svg><span>Весь клан · −55%</span></span>
+      <h2 id="bTitle">Усі 15 самураїв Asta Academy</h2>
+      <p id="bText"></p>
+    </div>
+    <div class="o-stats">
+      <div class="stat"><small>Курсів</small><strong>15</strong></div>
+      <div class="stat"><small>Контенту</small><strong>60+ год</strong></div>
+      <div class="stat"><small>Доступ</small><strong>Назавжди</strong></div>
+    </div>
+    <div class="o-buy">
+      <div class="pp"><s id="bOld"></s><strong id="bNew"></strong></div>
+      <a class="btn pulse" id="bBuy" href="#" target="_blank" rel="noopener">Забрати весь клан</a>
+      <div class="save" id="bSave"></div>
+    </div>
+  </div>
+  <div class="b-foot"></div>
+</section>
+
+<script>
+/* ============ ДАНІ КУРСІВ — редагуйте тут ============
+   price: число в $ (зараз умовні $100 для всіх платних)
+   url:   посилання на оплату / сторінку курсу            */
+const COURSES = [
+  {t:"Як перетворити ідею на успішний продукт", h:"6+ год", price:100, url:"#",
+   d:"Повний шлях від сирої ідеї до продукту, за який платять: валідація, MVP, перші користувачі.",
+   p:["Як перевірити ідею до старту розробки","Збірка MVP без зайвих витрат","Перші користувачі та метрики"]},
+  {t:"Успішний онбординг", h:"5+ год", price:100, url:"#",
+   d:"Як зробити так, щоб новий користувач чи співробітник з першого дня отримав цінність і залишився.",
+   p:["Сценарії першого досвіду","Активація та утримання","Інструменти й чек-листи"]},
+  {t:"Комунікація — найкраща зброя", h:"7.5+ год", price:100, url:"#",
+   d:"Найбільший курс серії: як домовлятися, доносити думки та впливати без тиску.",
+   p:["Ясні повідомлення для будь-якої аудиторії","Складні розмови та фідбек","Комунікація в команді й з бізнесом"]},
+  {t:"Діскавері і Інсайти", h:"3+ год", price:100, url:"#",
+   d:"Знаходимо справжні потреби користувачів і перетворюємо спостереження на інсайти для продукту.",
+   p:["Інтерв'ю з користувачами","Від даних до інсайтів","Пріоритезація можливостей"]},
+  {t:"Шлях Самозванця", h:"6+ год", price:100, url:"#",
+   d:"Про синдром самозванця в ІТ: звідки він береться і як перетворити його на точку росту.",
+   p:["Розпізнати пастки мислення","Впевненість через дії","Практики для щоденної роботи"]},
+  {t:"Монетизація знань", h:"6+ год", price:100, url:"#", gold:true,
+   d:"Як пакувати експертизу в продукти — від консультацій до власних курсів — і заробляти на знаннях.",
+   p:["Формати монетизації експертизи","Ціноутворення та позиціонування","Перші продажі"]},
+  {t:"Топ-10 факапів запуску продукту", h:"≈4.5 год", price:100, url:"#",
+   d:"Розбір реальних помилок під час запусків — або як не зафейлити свій.",
+   p:["10 типових провалів і їхні причини","Ранні сигнали проблем","Чек-лист безпечного запуску"]},
+  {t:"Переговори like a PRO", h:"≈4 год", price:100, url:"#",
+   d:"Техніки переговорів для зарплати, угод і партнерств — щоб виходити з бажаним результатом.",
+   p:["Підготовка та BATNA","Тактики й контртактики","Переговори про офер і ціну"]},
+  {t:"Високоефективні команди", h:"4 год", price:100, url:"#",
+   d:"Що відрізняє команди, які стабільно доставляють результат, і як побудувати таку.",
+   p:["Ролі, довіра та відповідальність","Ритуали й процеси","Мотивація без мікроменеджменту"]},
+  {t:"Тренди і АнтиТренди у не-технічному айті", h:"3.5 год", free:true, url:"#",
+   d:"Що зараз відбувається з не-технічними ролями в ІТ і куди рухатися, щоб залишатися затребуваним.",
+   p:["Ролі, що ростуть і зникають","Навички на найближчі роки","Як не потрапити в антитренд"]},
+  {t:"Офлайн-зустріч спільноти", h:"Офлайн", offline:true, url:"#",
+   d:"Офлайн-зустріч спільноти. Запису немає — цей самурай з'являється лише наживо. Залиште контакт, і ми першими повідомимо про наступну подію.",
+   p:["Нетворкінг з учасниками","Живі розбори кейсів","Атмосферу не передати у записі"]},
+  {t:"Темна сторона ІТ", h:"3.5+ год", free:true, url:"#", dark:true,
+   d:"Чесно про те, про що зазвичай мовчать: вигорання, токсичність, нереалістичні очікування.",
+   p:["Міфи про ІТ проти реальності","Червоні прапорці в компаніях","Як берегти себе"]},
+  {t:"Чому ми закрили Eated", h:"2.5 год", free:true, url:"#",
+   d:"Відвертий постмортем власного стартапу: рішення, помилки і висновки.",
+   p:["Історія продукту від старту до закриття","Ключові помилки","Що б зробили інакше"]},
+  {t:"Гіпотези для всіх", h:"3.5+ год", price:100, url:"#",
+   d:"Як формулювати і перевіряти гіпотези — навіть якщо ви не продакт і не аналітик.",
+   p:["Структура сильної гіпотези","Швидкі експерименти","Читання результатів"]},
+  {t:"Як отримати офер в ІТ", h:"4 год", price:100, url:"#",
+   d:"Від резюме до підписаного оферу: стратегія пошуку, співбесіди та переговори.",
+   p:["Резюме та LinkedIn, що працюють","Підготовка до співбесід","Як отримати кращий офер"]},
+];
+/* Розширений контент для детального екрана: [додаткові пункти програми], [для кого], результат */
+const MORE = [
+  [["Юніт-економіка на пальцях","Від MVP до продукту, що росте"],["Продакт-менеджерам","Фаундерам","Тим, хто має ідею"],"Ви пройдете шлях від ідеї до перевіреного MVP і знатимете, чи варто масштабувати продукт."],
+  [["Метрики онбордингу","Розбір реальних кейсів"],["Продактам","HR та тімлідам","CS-командам"],"Матимете готовий сценарій онбордингу і метрики, за якими видно, що він працює."],
+  [["Публічні виступи та презентації","Комунікація у кризових ситуаціях"],["Усім в ІТ","Менеджерам","Тім- і техлідам"],"Говоритимете так, щоб вас чули: впевнено, коротко і з потрібним результатом."],
+  [["Jobs To Be Done на практиці","Як презентувати інсайти команді"],["Продактам","UX-дослідникам","Дизайнерам"],"Зможете самостійно провести діскавері й перетворити інтерв'ю на рішення для продукту."],
+  [["Як просити підвищення","Робота з фідбеком без болю"],["Джунам і світчерам","Тим, хто виріс у ролі","Усім, хто сумнівається в собі"],"Перестанете знецінювати свій досвід і почнете впевнено заявляти про результати."],
+  [["Особистий бренд експерта","Запуск першого інфопродукту"],["Експертам","Менторам","Фрилансерам"],"Упакуєте експертизу в продукт і отримаєте план перших продажів."],
+  [["Ретроспектива невдалого запуску","Як говорити про провал з інвесторами"],["Фаундерам","Продактам","Маркетологам"],"Знатимете, де найчастіше ламаються запуски, і матимете чек-лист, щоб цього уникнути."],
+  [["Скрипти для складних моментів","Переговори з клієнтами та підрядниками"],["Усім, хто шукає роботу","Менеджерам","Фрилансерам"],"Вийдете на співбесіду чи угоду з планом і закриєте її на своїх умовах."],
+  [["Найм у команду","Робота з конфліктами"],["Тімлідам","Хедам","Фаундерам"],"Зберете команду, яка доставляє результат без вигорання та постійного контролю."],
+  [["Куди рухатися у 2027","Як оновити свій стек навичок"],["Не-технічним ролям в ІТ","Світчерам","HR і рекрутерам"],"Розумітимете, які ролі ростуть, і складете власний план розвитку."],
+  [["Формат зустрічі та учасники","Як потрапити на наступну"],["Спільноті Asta","Випускникам курсів","Тим, хто любить живе спілкування"],"Нові знайомства, живі розбори та енергія спільноти, яку не передати у записі."],
+  [["Токсичні менеджери й культура","Як вчасно піти"],["Усім в ІТ","Тим, хто на межі вигорання","Новачкам"],"Навчитеся помічати червоні прапорці та берегти себе без шкоди для кар'єри."],
+  [["Цифри та метрики Eated","Уроки для власного стартапу"],["Фаундерам","Продактам","Інвесторам-початківцям"],"Отримаєте чесний досвід закриття стартапу й уроки, які зекономлять вам роки."],
+  [["Пріоритезація гіпотез","Шаблони для щоденної роботи"],["Маркетологам","Продактам","Усім, хто ухвалює рішення"],"Перевірятимете ідеї швидко і дешево, замість того щоб сперечатися про думки."],
+  [["Робота з рекрутерами","Перші 90 днів на новій роботі"],["Джунам","Світчерам","Тим, хто шукає нову роботу"],"Матимете стратегію пошуку, готові матеріали та впевненість на співбесідах."],
+];
+COURSES.forEach((c,i)=>{ const m = MORE[i]; c.p = c.p.concat(m[0]); c.f = m[1]; c.r = m[2]; });
+// [пропорція картинки, центр ніг по X] — щоб номер стояв рівно між ніг
+const FEET = [[0.423,0.496],[0.363,0.497],[0.384,0.497],[0.457,0.379],[0.398,0.479],[0.405,0.490],[0.408,0.463],[0.344,0.490],[0.397,0.473],[0.438,0.427],[0.409,0.511],[0.395,0.485],[0.424,0.464],[0.373,0.519],[0.540,0.340]];
+// скільки перших слів назви підсвічувати градієнтом
+const HL = [2,1,1,1,1,1,2,1,1,3,1,2,3,1,2];
+COURSES.forEach((c,i)=>c.hl=HL[i]);
+const N = COURSES.length;
+/* ПАКЕТ «Весь клан» — умовна ціна, редагуйте */
+const BUNDLE = { price: 490, url: "#" };
+const money = n => "$" + n.toLocaleString("en-US");
+COURSES.forEach((c,i)=>{c.n=i+1;c.img=`img/s${i+1}.webp`;c.k=1;});
+COURSES[14].k = 1.33;   // лучник: лук додає висоти — масштабуємо по фігурі, а не по луку
+const pad = n => String(n).padStart(2,"0");
+const $ = id => document.getElementById(id);
+
+/* ============ RING ============ */
+const stage = $("stage"), floor = $("floor");
+const els = COURSES.map((c,i)=>{
+  const el = document.createElement("div");
+  el.className = "sam";
+  el.innerHTML = `<div class="tag">${pad(c.n)} · ${c.t}</div><div class="foot"></div><div class="cap"><b>${pad(c.n)}</b>${c.t}<br><span style="color:${c.free?"var(--lime)":c.offline?"var(--gold)":"#9aa89e"};font-weight:600">${c.free?"● Безкоштовно":c.offline?"Офлайн":money(c.price)}</span></div><button aria-label="${pad(c.n)} — ${c.t}"><img src="${c.img}" alt="" draggable="false"></button>`;
+  el.querySelector("button").addEventListener("click", e=>{
+    if (moved) return;
+    if (mode==="grid"){ goTo(i); openDetail(i); return; }
+    if (active === i) openDetail(i); else goTo(i);
+  });
+  stage.appendChild(el);
+  return el;
+});
+
+let rot = 0, target = 0, active = 0, mode = "ring";          // rot: float rotation in "items"
+let W, H, Rx, Rz, cx, baseY, frontH;
+function layout(){
+  W = stage.clientWidth; H = stage.clientHeight;
+  const mobile = W < 860;
+  const cardH = document.querySelector(".card").offsetHeight || 230;
+  if (mobile){
+    // висота блоку — по вмісту, щоб самурай стояв одразу під заголовком
+    const ringH = Math.round(30 + W*0.78*1.16 + cardH + 50);
+    if (mode !== "grid"){ ringEl.style.height = ringH + "px"; H = ringH; }
+    baseY = H - 84 - cardH + 34;                     // картка трохи перекриває ноги
+    frontH = Math.min(W*0.78, (baseY - 30)/1.16);
+    Rx = W*1.2;                                       // 1 цілий + 2 половинки по краях
+  } else {
+    if (mode !== "grid" && ringEl.style.height){ ringEl.style.height = ""; H = stage.clientHeight; }
+    frontH = Math.min(H*0.46, W*0.36);
+    Rx = Math.min(W*0.37, 640);
+  }
+  Rz = frontH*(mobile?0.30:0.36);             // how much back items rise
+  cx = W/2;
+  if (!mobile) baseY = H*0.72;
+  floor.style.setProperty("--floorW", Rx*2.1+"px");
+  floor.style.setProperty("--floorH", Rz*1.3+"px");
+  floor.style.setProperty("--floorY", (baseY - Rz*0.45)+"px");
+  floor.style.setProperty("--thick", Math.max(14, Rz*0.16)+"px");
+}
+function render(){
+  if (mode==="grid") return renderGrid();
+  const step = 2*Math.PI/N;
+  for (let i=0;i<N;i++){
+    const a = (i - rot)*step;                  // clockwise from above: next item to the left-front
+    const z = Math.cos(a);                     // 1 front … -1 back
+    const t = (z+1)/2;
+    const x = cx + Math.sin(a)*Rx;            // наступний номер — праворуч, як у галереї
+    const y = baseY - (1-t)*Rz;
+    const mob = W < 860;
+    let s = mob ? 0.45 + 0.55*Math.pow(t,7) : 0.42 + 0.58*Math.pow(t,1.6);
+    const d = Math.abs(((i - rot)%N + N + N/2)%N - N/2);   // distance from front (in items)
+    if (d < 1) s *= 1 + 0.16*(1-d);            // hero boost
+    const el = els[i];
+    const h = Math.min(frontH*s*COURSES[i].k, y - (W<860 ? 24 : 8));   // не залазити під шапку
+    el.style.height = h+"px";
+    const w = h*0.42;
+    const sh = (0.5 - FEET[i][1]) * h * FEET[i][0];
+    el.style.transform = `translate(${x - w + sh}px, ${y - h}px)`;
+    el.style.width = w*2+"px";
+    const blur = mob ? Math.min(7, d*3.2) : Math.max(0,(0.62-t))*7;
+    const bright = mob ? (d < .5 ? 1 : 0.5*Math.pow(t,2)) : 0.16 + 0.84*Math.pow(t,1.7);
+    el.style.filter = `brightness(${bright.toFixed(3)}) blur(${blur.toFixed(2)}px)` + (d<0.5 ? " drop-shadow(0 0 40px rgba(60,200,90,.25))":"");
+    el.style.opacity = (0.3 + 0.7*t).toFixed(3);
+    el.style.zIndex = Math.round(t*100);
+    el.classList.toggle("is-active", i===active);
+  }
+}
+function renderGrid(){
+  const mobile = W < 860, cols = mobile ? 2 : 5, rows = Math.ceil(N/cols);
+  const top = mobile ? 104 : 196, bottom = mobile ? 100 : 92;
+  const gridW = Math.min(W - (mobile?24:64), 1240);
+  const cellW = gridW/cols, cellH = mobile ? cellW*1.55 : (innerHeight - top - bottom)/rows;
+  const gb = $("gBanner");
+  gb.style.top = mobile ? (top + rows*cellH + 24) + "px" : "";
+  ringEl.style.height = mobile ? (top + rows*cellH + 24 + gb.offsetHeight + bottom) + "px" : "";
+  const capH = mobile ? 44 : 52;
+  const body = Math.min((cellH - capH)*0.76, cellW*1.9);   // figure height without crests/bow
+  const left = (W - gridW)/2;
+  for (let i=0;i<N;i++){
+    const c = COURSES[i], el = els[i];
+    const col = i%cols, row = Math.floor(i/cols);
+    const h = Math.min(body*c.k, (cellH - capH)*0.92), w = h*0.42;   // лук не залазить у ряд вище
+    const lastAlone = row === rows-1 && N % cols === 1;
+    const x = lastAlone ? left + gridW/2 : left + cellW*(col+.5);
+    const y = top + cellH*row + (cellH - capH);
+    el.style.height = h+"px"; el.style.width = w*2+"px";
+    const sh = (0.5 - FEET[i][1]) * h * FEET[i][0];
+    el.style.transform = `translate(${x-w+sh}px, ${y-h}px)`;
+    el.style.filter = "brightness(.95)"; el.style.opacity = 1; el.style.zIndex = 40 - row*10;
+    el.style.setProperty("--capW", (cellW-10)+"px");
+    el.classList.toggle("is-active", i===active);
+  }
+}
+let animT;
+function setMode(m){
+  if (m===mode) return;
+  mode = m; document.body.classList.add("anim");
+  if (m === "ring"){ ringEl.style.height = ""; layout(); }
+  requestAnimationFrame(onScroll);
+  document.body.classList.toggle("grid", m==="grid");
+  $("vRing").classList.toggle("on", m==="ring"); $("vRing").setAttribute("aria-pressed", m==="ring");
+  $("vGrid").classList.toggle("on", m==="grid"); $("vGrid").setAttribute("aria-pressed", m==="grid");
+  hideHint(); render();
+  clearTimeout(animT); animT = setTimeout(()=>document.body.classList.remove("anim"), 900);
+  try{ localStorage.setItem("asta-view", m); }catch(_){}
+}
+$("vRing").onclick = ()=>setMode("ring");
+$("vGrid").onclick = ()=>setMode("grid");
+// centre images within their box
+document.querySelectorAll(".sam button").forEach(b=>{b.style.marginInline="auto"});
+
+function tick(){
+  const diff = target - rot;
+  if (Math.abs(diff) > 0.0005){ rot += diff*0.11; render(); }
+  else if (rot!==target){ rot = target; render(); }
+  requestAnimationFrame(tick);
+}
+function goTo(i){
+  // shortest path
+  let d = ((i - target)%N + N + N/2)%N - N/2;
+  target = Math.round(target + d);
+  setActive(((target%N)+N)%N);
+}
+let lastDir = 1;
+function step(dir){ if (mode==="grid" && !$("detail").classList.contains("open")) return; lastDir = dir; target = Math.round(target)+dir; setActive(((target%N)+N)%N); hideHint(); }
+
+/* ============ ACTIVE CARD ============ */
+function stats(c){
+  const price = c.free ? `<div class="stat is-free"><small>Ціна</small><strong>Безкоштовно</strong></div>`
+              : c.offline ? `<div class="stat is-off"><small>Ціна</small><strong>Офлайн</strong></div>`
+              : `<div class="stat"><small>Ціна</small><strong>${money(c.price)}</strong></div>`;
+  if (c.offline) return `<div class="stat is-off"><small>Формат</small><strong>Тільки офлайн</strong></div>
+          <div class="stat"><small>Запис</small><strong>Немає</strong></div>
+          <div class="stat is-off"><small>Наступна</small><strong>Скоро</strong></div>`;
+  return `<div class="stat"><small>Тривалість</small><strong>${c.h}</strong></div>
+          <div class="stat"><small>Формат</small><strong>Запис</strong></div>${price}`;
+}
+function setActive(i){
+  if (i===active && $("cTitle").textContent) return;
+  active = i; const c = COURSES[i];
+  const body = $("cBody"); body.classList.add("out");
+  setTimeout(()=>{
+    $("cTitle").textContent = c.t; $("cMeta").innerHTML = stats(c);
+    body.classList.remove("out");
+  }, 180);
+  $("cNum").textContent = pad(c.n);
+  $("cur").textContent = pad(c.n);
+  $("bar").style.width = (c.n/N*100)+"%";
+  history.replaceState(null,"","#"+c.n+($("detail").classList.contains("open")?"-details":""));
+  if ($("detail").classList.contains("open")) swapDetail(i, lastDir);
+}
+
+/* ============ DETAIL ============ */
+function fillDetail(i){
+  const c = COURSES[i], dl = $("detail");
+  dl.classList.toggle("gold", !!c.gold);
+  $("dNum").textContent = pad(c.n); $("dCur").textContent = pad(c.n);
+  const w = c.t.replace(" —","").split(" ");
+  $("dTitle").innerHTML = `<span class="hl">${w.slice(0,c.hl).join(" ")}</span><span>${w.slice(c.hl).join(" ")}</span>`;
+  $("dDesc").textContent = c.d;
+  $("dPoints").innerHTML = c.p.map(x=>`<li>${x}</li>`).join("");
+  $("dFor").innerHTML = c.f.map(x=>`<span>${x}</span>`).join("");
+  $("dRes").textContent = c.r;
+  $("dHow").innerHTML = (c.offline
+    ? [["◎","Тільки наживо"],["✦","Нетворкінг"],["✎","Живі розбори"],["🔔","Анонс у Telegram"]]
+    : [["▶","Відеозапис "+c.h],["∞","Доступ назавжди"],["⏱","У своєму темпі"],["✎","Матеріали та шаблони"]]
+  ).map(([i,t])=>`<div><i>${i}</i>${t}</div>`).join("");
+  $("detail").querySelector(".d-left").scrollTop = 0;
+  const img = $("dImg");
+  img.src = c.img; img.alt = c.t; img.style.setProperty("--k", c.k); dl.style.setProperty("--k", c.k);
+  img.style.transform = `translateX(${((0.5 - FEET[i][1])*100).toFixed(1)}%)`;
+  $("dHours").textContent = c.offline ? "Наживо" : c.h;
+  $("dFormat").textContent = c.offline ? "Тільки офлайн" : "Відеозапис";
+  const pr = $("dPrice"); pr.className = c.free ? "free" : ""; pr.style.cssText = "";
+  buy_reset();
+  const buy = $("dBuy"); buy.href = c.url; buy.removeAttribute("aria-disabled"); buy.className="btn";
+  if (c.free){ pr.textContent="Безкоштовно"; buy.textContent="Отримати безкоштовно"; $("dNote").textContent="Доступ одразу після реєстрації"; }
+  else if (c.offline){ pr.textContent="Подія наживо"; pr.className="free"; pr.style.cssText="color:var(--gold);font-size:18px;text-shadow:none"; buy.textContent="🔔 Хочу на наступну зустріч"; buy.className="btn gold"; $("dNote").textContent="Подія проходить лише наживо, запису немає"; }
+  else { pr.textContent = money(c.price); buy.textContent=`Купити за ${money(c.price)}`; $("dNote").textContent="Доступ до запису назавжди"; }
+}
+function buy_reset(){ $("wl").hidden = true; $("wlOk").hidden = true; $("dBuy").hidden = false; }
+$("dBuy").addEventListener("click", e=>{
+  if (!COURSES[active].offline) return;
+  e.preventDefault(); $("dBuy").hidden = true; $("wl").hidden = false; $("wlIn").focus();
+});
+$("wl").addEventListener("submit", e=>{
+  e.preventDefault();
+  // TODO: відправити $("wlIn").value у вашу CRM / Telegram-бот / Google-форму
+  try{ localStorage.setItem("asta-waitlist", $("wlIn").value); }catch(_){}
+  $("wl").hidden = true; $("wlOk").hidden = false;
+});
+let lastFocus;
+const REDUCE = matchMedia("(prefers-reduced-motion: reduce)").matches;
+// плавна зміна самурая всередині відкритого екрана
+let swapT;
+function swapDetail(i, dir){
+  const dl = $("detail");
+  if (REDUCE){ fillDetail(i); return; }
+  clearTimeout(swapT);
+  dl.style.setProperty("--dir", dir);
+  dl.classList.remove("swap-in"); dl.classList.add("swap-out");
+  swapT = setTimeout(()=>{
+    fillDetail(i);
+    dl.classList.remove("swap-out"); dl.classList.add("swap-in");
+    void dl.offsetWidth;                       // зафіксувати стартову позицію
+    dl.classList.remove("swap-in");
+  }, 280);
+}
+function inView(r){ return r.width > 0 && r.bottom > 0 && r.top < innerHeight; }
+function fly(from, to, src, dur){
+  const im = document.createElement("img"); im.src = src; im.className = "flyer";
+  Object.assign(im.style,{left:from.left+"px",top:from.top+"px",width:from.width+"px",height:from.height+"px"});
+  document.body.appendChild(im);
+  const a = im.animate([{transform:"none"},{transform:`translate(${to.left-from.left}px,${to.top-from.top}px) scale(${to.width/from.width},${to.height/from.height})`}],
+    {duration:dur, easing:"cubic-bezier(.65,0,.25,1)", fill:"forwards"});
+  return a.finished.then(()=>im.remove());
+}
+function openDetail(i){
+  lastFocus = document.activeElement;
+  fillDetail(i);
+  const src = els[i].querySelector("img"), r0 = src.getBoundingClientRect();
+  const img = $("dImg"), canFly = !REDUCE && inView(r0);
+  document.body.classList.add("focus");
+  if (canFly){ els[i].classList.add("is-flying"); img.style.visibility = "hidden"; }
+  $("detail").classList.add("open"); $("dClose").focus({preventScroll:true}); hideHint();
+  if (canFly){
+    (img.decode ? img.decode() : Promise.resolve()).catch(()=>{}).then(()=>{
+      fly(r0, img.getBoundingClientRect(), COURSES[i].img, 750).then(()=>{ img.style.visibility = ""; els[i].classList.remove("is-flying"); });
+    });
+  }
+  history.replaceState(null,"","#"+(i+1)+"-details");
+}
+function closeDetail(){
+  const dl = $("detail"); if (!dl.classList.contains("open")) return;
+  const img = $("dImg"), r1 = img.getBoundingClientRect();
+  const el = els[active], r0 = el.querySelector("img").getBoundingClientRect();
+  dl.classList.remove("open");
+  if (!REDUCE && inView(r0) && r1.width){
+    img.style.visibility = "hidden"; el.classList.add("is-flying");
+    setTimeout(()=>document.body.classList.remove("focus"), 380);
+    fly(r1, r0, COURSES[active].img, 700).then(()=>{ el.classList.remove("is-flying"); img.style.visibility = ""; });
+  } else document.body.classList.remove("focus");
+  history.replaceState(null,"","#"+(active+1)); lastFocus && lastFocus.focus({preventScroll:true});
+}
+
+/* ============ BUNDLE ============ */
+const PAID = COURSES.filter(c=>!c.free && !c.offline);
+const fullPrice = PAID.reduce((a,c)=>a+c.price,0);
+const savePct = Math.round((1 - BUNDLE.price/fullPrice)*100);
+document.querySelector(".offer-pill em").textContent = `−${savePct}%`;
+document.querySelector(".o-badge span").textContent = `Весь клан · −${savePct}%`;
+$("gOld").textContent = $("bOld").textContent = money(fullPrice);
+$("gNew").textContent = $("bNew").textContent = money(BUNDLE.price);
+$("dUpPrice").textContent = money(BUNDLE.price);
+$("bSave").textContent = `Економія ${money(fullPrice-BUNDLE.price)} · ${PAID.length} платних + ${COURSES.filter(c=>c.free).length} безкоштовні курси`;
+$("bText").textContent = "Повний арсенал: від ідеї й онбордингу до переговорів, команд і оферу. Усі записи в одному доступі + анонси офлайн-зустрічей клану.";
+$("bBuy").href = BUNDLE.url;
+// ряд усіх 15 самураїв: №1 у центрі, до країв трохи менші
+const CLAN_ROW = [11,9,7,5,3,13,2,1,6,14,4,12,8,10,15];   // лучник — у самому кінці, позаду всіх
+function clanRow(){
+  return CLAN_ROW.map((n,i)=>{
+    const d = Math.abs(i-7), sc = (1 - d*0.045) * (n===15 ? 1.25 : 1);
+    return `<img src="img/s${n}.webp" alt="" style="height:${(sc*100).toFixed(1)}%;z-index:${n===15 ? 0 : 20-d}">`;
+  }).join("");
+}
+$("gAv").innerHTML = $("mAv").innerHTML = clanRow();
+$("clanSec").innerHTML = $("gBanner").outerHTML.replace(/ id="[^"]*"/g, "");
+$("clanSec").querySelector(".btn").onclick = openBundle;
+$("mOld").textContent = money(fullPrice); $("mNew").textContent = money(BUNDLE.price);
+$("mClan").onclick = openBundle;
+
+
+// battle formation: back → middle → front (front centre = №1)
+const FORM = [
+  {row:[7,8,9,10,11], y:.40, h:.62, b:.42, span:.40},
+  {row:[5,4,6,13,12], y:.32, h:.72, b:.66, span:.50},
+  {row:[3,2,1,15,14], y:.24, h:.79, b:1,   span:.58},
+];
+function buildArmy(){
+  const a = $("army"); let html = `<div class="disk"><div class="shadow"></div><div class="side"></div><div class="top"></div></div>`, d=0;
+  FORM.forEach((r,ri)=>r.row.forEach((n,ci)=>{
+    const c = COURSES[n-1], hero = n===1;
+    const x = 50 + (ci-2)*(r.span*100/4) + (ri===1 ? r.span*100/8*(ci<2?1:ci>2?-1:0) : 0);
+    const h = r.h*(hero?1.08:1)*(1+(c.k-1)*.6)*100;
+    html += `<div class="u${hero?" hero":""}" style="--cx:${FEET[n-1][1]};left:${x}%;bottom:${r.y*100}%;height:${h}%;z-index:${ri*10+(ci===2?5:0)};filter:brightness(${r.b});transition-delay:${(.15+d++*.04).toFixed(2)}s"><img src="${c.img}" alt="№${n} ${c.t}"></div>`;
+  }));
+  a.innerHTML = html;
+}
+buildArmy();
+function sizeArmyDisk(){
+  const a = $("army"), disk = a.querySelector(".disk"); if(!disk) return;
+  const w = Math.min(a.clientWidth*0.78, a.clientHeight*2.2), h = Math.max(60, a.clientHeight*0.30);
+  disk.style.setProperty("--floorW", w+"px"); disk.style.setProperty("--floorH", h+"px"); disk.style.setProperty("--thick", Math.max(14,h*0.14)+"px");
+}
+function openBundle(){ lastFocus = document.activeElement; closeMenu(); $("bundle").classList.add("open"); requestAnimationFrame(sizeArmyDisk); $("bClose").focus(); hideHint(); history.replaceState(null,"","#bundle"); }
+function closeBundle(){ $("bundle").classList.remove("open"); history.replaceState(null,"","#"+(active+1)); lastFocus && lastFocus.focus(); }
+$("openBundle").onclick = openBundle; $("gBtn").onclick = openBundle; $("bClose").onclick = closeBundle;
+$("dUpsell").onclick = ()=>{ closeDetail(); openBundle(); };
+addEventListener("resize", sizeArmyDisk);
+
+/* ============ MENU ============ */
+function buildList(f="all"){
+  $("list").innerHTML = COURSES.map((c,i)=>{
+    const show = f==="all" || (f==="free" && c.free) || (f==="paid" && !c.free && !c.offline);
+    return `<button class="row ${show?"":"dim"}" data-i="${i}">
+      <span><b>№${pad(c.n)}${c.free?" · безкоштовний":c.offline?" · офлайн":""}</b><span>${c.t}</span><small>${c.offline?"Запису немає":c.h+" контенту"} · ${c.free?'<em style="font-style:normal;color:var(--lime);font-weight:600">Безкоштовно</em>':c.offline?"офлайн":money(c.price)}</small></span>
+    </button>`;}).join("");
+}
+buildList();
+$("list").addEventListener("click",e=>{const r=e.target.closest(".row"); if(!r) return; closeMenu(); goTo(+r.dataset.i); setTimeout(()=>openDetail(+r.dataset.i),450);});
+$("filters").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return;
+  [...$("filters").children].forEach(x=>x.classList.toggle("on",x===b)); buildList(b.dataset.f);});
+function openMenu(){ $("menu").classList.add("open"); }
+function closeMenu(){ $("menu").classList.remove("open"); }
+$("openMenu").onclick = openMenu; $("closeMenu").onclick = closeMenu;
+
+/* ============ INPUT ============ */
+$("prev").onclick = ()=>step(-1); $("next").onclick = ()=>step(1);
+$("cBtn").onclick = ()=>openDetail(active);
+$("dClose").onclick = closeDetail;
+$("dPrev").onclick = ()=>step(-1); $("dNext").onclick = ()=>step(1);
+
+/* ============ SCROLL: intro → ring ============ */
+const introEl = $("intro"), ringEl = $("ring");
+function onScroll(){
+  const p = Math.min(1, Math.max(0, scrollY / Math.max(1, introEl.offsetHeight)));
+  const mob = innerWidth < 860;
+  introEl.style.transform = mob ? "" : `translateY(${p*12}vh)`;
+  introEl.style.opacity = Math.max(0, 1 - p*1.5).toFixed(3);
+  introEl.style.filter = p > .01 ? `blur(${(p*10).toFixed(1)}px)` : "";
+  ringEl.style.transform = (mob || p >= 0.999) ? "" : `scale(${(0.96 + 0.04*p).toFixed(4)})`;   // без transform — щоб fixed-плашка кріпилась до екрана
+  ringEl.style.opacity = mob ? "" : (0.6 + 0.4*p).toFixed(3);
+  hint.classList.toggle("off", p < .85);
+  document.body.classList.toggle("scrolled", scrollY > 40);
+  const rr = ringEl.getBoundingClientRect();
+  document.body.classList.toggle("pin", mode === "grid" && rr.top < innerHeight - 120 && rr.bottom > innerHeight + 1);
+}
+addEventListener("scroll", onScroll, {passive:true});
+
+addEventListener("keydown",e=>{
+  if ($("menu").classList.contains("open")){ if(e.key==="Escape") closeMenu(); return; }
+  if (e.key==="ArrowRight") step(1);
+  else if (e.key==="ArrowLeft") step(-1);
+  else if (e.key==="Escape"){ if ($("bundle").classList.contains("open")) closeBundle(); else closeDetail(); }
+  else if (e.key==="Enter" && !$("detail").classList.contains("open") && document.activeElement===document.body) openDetail(active);
+});
+
+
+// drag / swipe
+let dragX=null, dragRot=0, moved=false, pid;
+stage.addEventListener("pointerdown",e=>{dragX=e.clientX; dragRot=target; moved=false; pid=e.pointerId;});
+stage.addEventListener("pointermove",e=>{
+  if (dragX===null || mode==="grid") return;
+  const dx = e.clientX - dragX;
+  if (Math.abs(dx)>6 && !moved){ moved=true; try{stage.setPointerCapture(pid)}catch(_){} stage.classList.add("dragging"); hideHint(); }
+  if (moved){ target = dragRot - dx/(Rx*0.55); rot = target; render(); }
+});
+const endDrag = e=>{
+  if (dragX===null) return; dragX=null; stage.classList.remove("dragging");
+  if (moved){ target=Math.round(target); setActive(((target%N)+N)%N); setTimeout(()=>moved=false,0); }
+};
+stage.addEventListener("pointerup",endDrag); stage.addEventListener("pointercancel",endDrag);
+
+// "Гортай" hint follows cursor until first interaction
+// підказка «Гортай»: ховається від будь-якої дії, повертається після 4 с бездіяльності
+const hint = $("hint"); let idleT;
+const overlayOpen = ()=>["detail","bundle","menu"].some(id=>$(id).classList.contains("open"));
+function hideHint(){
+  hint.classList.add("hide");
+  clearTimeout(idleT);
+  idleT = setTimeout(()=>{ if (mode==="ring" && !overlayOpen()) hint.classList.remove("hide"); }, 4000);
+}
+["pointerdown","keydown","wheel","touchstart"].forEach(ev=>addEventListener(ev, hideHint, {passive:true}));
+stage.addEventListener("mousemove",e=>{ hint.style.left=e.clientX+"px"; hint.style.top=e.clientY+"px"; });
+
+/* ============ OVERLAYS / FOOTER ============ */
+const syncLock = ()=>{ document.documentElement.style.overflow = ["detail","bundle","menu"].some(id=>$(id).classList.contains("open")) ? "hidden" : ""; };
+["detail","bundle","menu"].forEach(id=>new MutationObserver(syncLock).observe($(id),{attributes:true,attributeFilter:["class"]}));
+document.querySelector(".b-foot").outerHTML = document.querySelector(".site-foot").outerHTML;
+document.querySelectorAll(".yr").forEach(e=>e.textContent = new Date().getFullYear());
+document.querySelectorAll(".sf-up").forEach(b=>b.onclick = ()=>{ if ($("bundle").classList.contains("open")) $("bundle").scrollTo({top:0,behavior:"smooth"}); else scrollTo({top:0,behavior:"smooth"}); });
+
+/* ============ INIT ============ */
+addEventListener("resize",()=>{layout();render();});
+const initHash = location.hash, fromHash = parseInt(initHash.slice(1));
+const start = fromHash>=1 && fromHash<=N ? fromHash-1 : 0;
+rot = target = start; layout(); setActive(start); active=start; render(); tick();
+if (/details|bundle|grid/.test(initHash)) scrollTo({top:innerHeight, behavior:"instant"});
+onScroll();
+if (/details/.test(initHash)) openDetail(start);
+if (/bundle/.test(initHash)) openBundle();
+try{ if (localStorage.getItem("asta-view")==="grid" || /grid/.test(initHash)){ mode="ring"; document.body.classList.add("grid"); mode="grid"; $("vRing").classList.remove("on"); $("vGrid").classList.add("on"); render(); } }catch(_){}
+</script>
+</body>
+</html>
