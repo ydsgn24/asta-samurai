@@ -562,6 +562,8 @@ img::selection,.stage *::selection,.ring *::selection{background:transparent}
 .o-off{font-size:18px!important;padding:7px 14px!important}
 .offer-pill em{background:linear-gradient(90deg,#16b84a,#3ee06e)!important;box-shadow:0 0 16px rgba(62,224,110,.6)!important}
 @keyframes discGlow{0%,100%{box-shadow:0 0 0 1px rgba(255,255,255,.25) inset,0 0 18px rgba(62,224,110,.45),0 8px 20px -6px rgba(0,0,0,.5)}50%{box-shadow:0 0 0 1px rgba(255,255,255,.35) inset,0 0 34px rgba(62,224,110,.85),0 8px 20px -6px rgba(0,0,0,.5)}}
+/* сенсорні екрани: без підказок-назв над самураями (hover «залипає» при скролі) */
+@media (hover:none),(max-width:860px){ .sam .tag{display:none!important} }
 </style>
 </head>
 <body>
@@ -965,6 +967,7 @@ function fillDetail(i){
   $("dDesc").textContent = c.d;
   $("dNoteTop").textContent = c.note || ""; $("dNoteTop").hidden = !c.note;
   $("dBadge").hidden = !c.offline;
+  $("dUpsell").hidden = !!c.offline;   // офлайн не входить у бандл
   $("dPoints").innerHTML = c.p.map(x=>`<li>${x}</li>`).join("");
   $("dFor").innerHTML = c.f.map(x=>`<span>${x}</span>`).join("");
   $("dRes").textContent = c.r; $("dRes").parentElement.hidden = !c.r;
