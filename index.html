@@ -547,6 +547,14 @@ body{-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:trans
 img{-webkit-user-select:none;user-select:none;-webkit-user-drag:none;-webkit-touch-callout:none}
 img::selection,.stage *::selection,.ring *::selection{background:transparent}
 .d-desc,.d-sec,.site-foot,.wl input{-webkit-user-select:text;user-select:text}
+/* плашки: знижка, ексклюзивно офлайн, примітка */
+.gb-badge{font-size:14px!important;padding:7px 14px!important;background:linear-gradient(90deg,#e3b341,#f4d77a)!important;color:#1a1405!important;box-shadow:0 8px 22px -6px rgba(227,179,65,.55),inset 0 0 0 1px rgba(255,255,255,.35)!important;letter-spacing:.02em}
+.o-off{align-self:center;padding:6px 12px;border-radius:999px;background:linear-gradient(90deg,#e3b341,#f4d77a);color:#1a1405;font-weight:800;font-size:16px;box-shadow:0 8px 22px -6px rgba(227,179,65,.55)}
+.off-badge{display:inline-flex;align-self:flex-start;padding:5px 11px;border-radius:999px;font-family:"Onest",sans-serif;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#1a1405;background:linear-gradient(90deg,#c99a3a,#ecd28a);margin-bottom:8px}
+.card h1 .off-badge{display:table;margin:0 auto 8px}
+.card h1{flex-direction:column}
+.d-note{font-size:13px;line-height:1.5;color:rgba(255,255,255,.6);padding-left:12px;border-left:2px solid rgba(255,255,255,.15)}
+@media (max-width:860px){ .d-head .off-badge{align-self:center} }
 </style>
 </head>
 <body>
@@ -561,7 +569,7 @@ img::selection,.stage *::selection,.ring *::selection{background:transparent}
   <button class="menu-btn" id="openMenu" aria-label="Відкрити меню курсів"><i></i>Меню</button>
   <a class="logo" href="#" aria-label="Asta Academy"><img src="img/logo.svg" alt=""><span>Asta Academy</span></a>
   <div class="top-right">
-    <button class="pill glass offer-pill hot" id="openBundle"><span class="op-t"><svg class="sw" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9.3 2h5.4v2.4c2.5.8 4.3 3 4.6 5.7L22.6 15h-4c-.7 3.3-3.4 6-6.6 6s-5.9-2.7-6.6-6h-4l3.3-4.9c.3-2.7 2.1-4.9 4.6-5.7zM6.6 10.3h10.8v.8H6.6zM8.4 12.6l2.6.7-.2.9-2.6-.7zM15.6 12.6l-2.6.7.2.9 2.6-.7z"/></svg>Весь клан · 15 курсів</span><em>−55%</em></button>
+    <button class="pill glass offer-pill hot" id="openBundle"><span class="op-t"><svg class="sw" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9.3 2h5.4v2.4c2.5.8 4.3 3 4.6 5.7L22.6 15h-4c-.7 3.3-3.4 6-6.6 6s-5.9-2.7-6.6-6h-4l3.3-4.9c.3-2.7 2.1-4.9 4.6-5.7zM6.6 10.3h10.8v.8H6.6zM8.4 12.6l2.6.7-.2.9-2.6-.7zM15.6 12.6l-2.6.7.2.9 2.6-.7z"/></svg>Весь клан · 14 курсів</span><em>−29%</em></button>
     <a class="pill" href="https://asta.academy" target="_blank" rel="noopener">На сайт</a>
   </div>
 </header>
@@ -597,11 +605,11 @@ img::selection,.stage *::selection,.ring *::selection{background:transparent}
 </section>
 
 <section class="gbanner glass hot" id="gBanner" aria-label="Пакетна пропозиція">
-  <div class="gb-media"><div class="avatars" id="gAv"></div><span class="gb-badge">−55%</span></div>
+  <div class="gb-media"><div class="avatars" id="gAv"></div><span class="gb-badge">−29%</span></div>
   <div class="gb-body">
     <div class="kicker"><svg class="sw" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9.3 2h5.4v2.4c2.5.8 4.3 3 4.6 5.7L22.6 15h-4c-.7 3.3-3.4 6-6.6 6s-5.9-2.7-6.6-6h-4l3.3-4.9c.3-2.7 2.1-4.9 4.6-5.7zM6.6 10.3h10.8v.8H6.6zM8.4 12.6l2.6.7-.2.9-2.6-.7zM15.6 12.6l-2.6.7.2.9 2.6-.7z"/></svg>Весь клан · пакет усіх курсів</div>
-    <h3>15 самураїв<br>в одному доступі</h3>
-    <ul class="gb-facts"><li><b>15</b><span>курсів</span></li><li><b>60+</b><span>годин</span></li><li><b>∞</b><span>доступ</span></li></ul>
+    <h3>14 шляхів<br>в одному доступі</h3>
+    <ul class="gb-facts"><li><b>14</b><span>курсів</span></li><li><b>63</b><span>години</span></li><li><b>∞</b><span>доступ</span></li></ul>
   </div>
   <div class="gb-buy">
     <div class="pr"><strong id="gNew"></strong><s id="gOld"></s></div>
@@ -650,13 +658,13 @@ img::selection,.stage *::selection,.ring *::selection{background:transparent}
   <button class="menu-btn close" id="closeMenu">✕&nbsp; Закрити</button>
   <button class="m-clan glass hot" id="mClan">
     <span class="m-av" id="mAv"></span>
-    <span class="m-tx"><b>Весь клан · 15 самураїв</b><small>Усі курси в одному доступі</small></span>
+    <span class="m-tx"><b>Весь клан · 14 шляхів</b><small>Усі записи в одному доступі</small></span>
     <span class="m-pr"><s id="mOld"></s><strong id="mNew"></strong></span>
   </button>
   <div class="filters" id="filters">
     <button data-f="all" class="on">Усі · 15</button>
-    <button data-f="paid">Платні</button>
-    <button data-f="free">Безкоштовні</button>
+    <button data-f="paid">У записі</button>
+    <button data-f="free">Офлайн</button>
   </div>
   <div class="list" id="list"></div>
 </nav>
@@ -665,8 +673,9 @@ img::selection,.stage *::selection,.ring *::selection{background:transparent}
 <section class="detail" id="detail" role="dialog" aria-modal="true" aria-labelledby="dTitle">
   <button class="d-close" id="dClose"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>До всіх самураїв</button>
   <div class="d-left">
-    <div class="d-head"><span id="dNum" hidden></span><h2 id="dTitle"></h2></div>
+    <div class="d-head"><span id="dNum" hidden></span><span class="off-badge" id="dBadge" hidden>Ексклюзивно офлайн</span><h2 id="dTitle"></h2></div>
     <p class="d-desc" id="dDesc"></p>
+    <p class="d-note" id="dNoteTop" hidden></p>
     <div class="d-sec"><h4>Програма</h4><ol class="d-mod" id="dPoints"></ol></div>
     <div class="d-sec"><h4>Для кого</h4><div class="d-for" id="dFor"></div></div>
     <div class="d-sec"><h4>Результат</h4><div class="d-res" id="dRes"></div></div>
@@ -688,7 +697,7 @@ img::selection,.stage *::selection,.ring *::selection{background:transparent}
       <div class="wl-ok" id="wlOk" hidden>✓ Ви в списку — напишемо, щойно відкриється реєстрація на наступну зустріч</div>
       <p class="note" id="dNote"></p>
     </div>
-    <button class="d-upsell glass hot" id="dUpsell"><span class="ic"><svg class="sw" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9.3 2h5.4v2.4c2.5.8 4.3 3 4.6 5.7L22.6 15h-4c-.7 3.3-3.4 6-6.6 6s-5.9-2.7-6.6-6h-4l3.3-4.9c.3-2.7 2.1-4.9 4.6-5.7zM6.6 10.3h10.8v.8H6.6zM8.4 12.6l2.6.7-.2.9-2.6-.7zM15.6 12.6l-2.6.7.2.9 2.6-.7z"/></svg></span><span>Або весь клан — <b id="dUpPrice"></b> за всі 15 курсів</span></button>
+    <button class="d-upsell glass hot" id="dUpsell"><span class="ic"><svg class="sw" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9.3 2h5.4v2.4c2.5.8 4.3 3 4.6 5.7L22.6 15h-4c-.7 3.3-3.4 6-6.6 6s-5.9-2.7-6.6-6h-4l3.3-4.9c.3-2.7 2.1-4.9 4.6-5.7zM6.6 10.3h10.8v.8H6.6zM8.4 12.6l2.6.7-.2.9-2.6-.7zM15.6 12.6l-2.6.7.2.9 2.6-.7z"/></svg></span><span>Або весь клан — <b id="dUpPrice"></b> за всі 14 курсів</span></button>
     <div class="d-nav">
       <div class="d-count"><b id="dCur" style="color:var(--lime)">01</b> / 15</div>
       <button id="dPrev" aria-label="Попередній курс"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
@@ -704,16 +713,16 @@ img::selection,.stage *::selection,.ring *::selection{background:transparent}
   <div class="offer glass hot">
     <div>
       <span class="o-badge"><svg class="sw" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M9.3 2h5.4v2.4c2.5.8 4.3 3 4.6 5.7L22.6 15h-4c-.7 3.3-3.4 6-6.6 6s-5.9-2.7-6.6-6h-4l3.3-4.9c.3-2.7 2.1-4.9 4.6-5.7zM6.6 10.3h10.8v.8H6.6zM8.4 12.6l2.6.7-.2.9-2.6-.7zM15.6 12.6l-2.6.7.2.9 2.6-.7z"/></svg><span>Весь клан · −55%</span></span>
-      <h2 id="bTitle">Усі 15 самураїв Asta Academy</h2>
+      <h2 id="bTitle">Усі 14 Шляхів Самурая в записі</h2>
       <p id="bText"></p>
     </div>
     <div class="o-stats">
-      <div class="stat"><small>Курсів</small><strong>15</strong></div>
-      <div class="stat"><small>Контенту</small><strong>60+ год</strong></div>
+      <div class="stat"><small>Курсів</small><strong>14</strong></div>
+      <div class="stat"><small>Контенту</small><strong>63 год</strong></div>
       <div class="stat"><small>Доступ</small><strong>Назавжди</strong></div>
     </div>
     <div class="o-buy">
-      <div class="pp"><s id="bOld"></s><strong id="bNew"></strong></div>
+      <div class="pp"><s id="bOld"></s><strong id="bNew"></strong><span class="o-off"></span></div>
       <a class="btn pulse" id="bBuy" href="#" target="_blank" rel="noopener">Забрати весь клан</a>
       <div class="save" id="bSave"></div>
     </div>
@@ -723,74 +732,25 @@ img::selection,.stage *::selection,.ring *::selection{background:transparent}
 
 <script>
 /* ============ ДАНІ КУРСІВ — редагуйте тут ============
-   price: число в $ (зараз умовні $100 для всіх платних)
+   price: ціна в € · offline: тільки офлайн (не входить у бандл) · note: примітка дрібним текстом · r: результат (порожньо — блок прихований)
    url:   посилання на оплату / сторінку курсу            */
 const COURSES = [
-  {t:"Як перетворити ідею на успішний продукт", h:"6+ год", price:100, url:"#",
-   d:"Повний шлях від сирої ідеї до продукту, за який платять: валідація, MVP, перші користувачі.",
-   p:["Як перевірити ідею до старту розробки","Збірка MVP без зайвих витрат","Перші користувачі та метрики"]},
-  {t:"Успішний онбординг", h:"5+ год", price:100, url:"#",
-   d:"Як зробити так, щоб новий користувач чи співробітник з першого дня отримав цінність і залишився.",
-   p:["Сценарії першого досвіду","Активація та утримання","Інструменти й чек-листи"]},
-  {t:"Комунікація — найкраща зброя", h:"7.5+ год", price:100, url:"#",
-   d:"Найбільший курс серії: як домовлятися, доносити думки та впливати без тиску.",
-   p:["Ясні повідомлення для будь-якої аудиторії","Складні розмови та фідбек","Комунікація в команді й з бізнесом"]},
-  {t:"Діскавері і Інсайти", h:"3+ год", price:100, url:"#",
-   d:"Знаходимо справжні потреби користувачів і перетворюємо спостереження на інсайти для продукту.",
-   p:["Інтерв'ю з користувачами","Від даних до інсайтів","Пріоритезація можливостей"]},
-  {t:"Шлях Самозванця", h:"6+ год", price:100, url:"#",
-   d:"Про синдром самозванця в ІТ: звідки він береться і як перетворити його на точку росту.",
-   p:["Розпізнати пастки мислення","Впевненість через дії","Практики для щоденної роботи"]},
-  {t:"Монетизація знань", h:"6+ год", price:100, url:"#", gold:true,
-   d:"Як пакувати експертизу в продукти — від консультацій до власних курсів — і заробляти на знаннях.",
-   p:["Формати монетизації експертизи","Ціноутворення та позиціонування","Перші продажі"]},
-  {t:"Топ-10 факапів запуску продукту", h:"≈4.5 год", price:100, url:"#",
-   d:"Розбір реальних помилок під час запусків — або як не зафейлити свій.",
-   p:["10 типових провалів і їхні причини","Ранні сигнали проблем","Чек-лист безпечного запуску"]},
-  {t:"Переговори like a PRO", h:"≈4 год", price:100, url:"#",
-   d:"Техніки переговорів для зарплати, угод і партнерств — щоб виходити з бажаним результатом.",
-   p:["Підготовка та BATNA","Тактики й контртактики","Переговори про офер і ціну"]},
-  {t:"Високоефективні команди", h:"4 год", price:100, url:"#",
-   d:"Що відрізняє команди, які стабільно доставляють результат, і як побудувати таку.",
-   p:["Ролі, довіра та відповідальність","Ритуали й процеси","Мотивація без мікроменеджменту"]},
-  {t:"Тренди і АнтиТренди у не-технічному айті", h:"3.5 год", free:true, url:"#",
-   d:"Що зараз відбувається з не-технічними ролями в ІТ і куди рухатися, щоб залишатися затребуваним.",
-   p:["Ролі, що ростуть і зникають","Навички на найближчі роки","Як не потрапити в антитренд"]},
-  {t:"Офлайн-зустріч спільноти", h:"Офлайн", offline:true, url:"#",
-   d:"Офлайн-зустріч спільноти. Запису немає — цей самурай з'являється лише наживо. Залиште контакт, і ми першими повідомимо про наступну подію.",
-   p:["Нетворкінг з учасниками","Живі розбори кейсів","Атмосферу не передати у записі"]},
-  {t:"Темна сторона ІТ", h:"3.5+ год", free:true, url:"#", dark:true,
-   d:"Чесно про те, про що зазвичай мовчать: вигорання, токсичність, нереалістичні очікування.",
-   p:["Міфи про ІТ проти реальності","Червоні прапорці в компаніях","Як берегти себе"]},
-  {t:"Чому ми закрили Eated", h:"2.5 год", free:true, url:"#",
-   d:"Відвертий постмортем власного стартапу: рішення, помилки і висновки.",
-   p:["Історія продукту від старту до закриття","Ключові помилки","Що б зробили інакше"]},
-  {t:"Гіпотези для всіх", h:"3.5+ год", price:100, url:"#",
-   d:"Як формулювати і перевіряти гіпотези — навіть якщо ви не продакт і не аналітик.",
-   p:["Структура сильної гіпотези","Швидкі експерименти","Читання результатів"]},
-  {t:"Як отримати офер в ІТ", h:"4 год", price:100, url:"#",
-   d:"Від резюме до підписаного оферу: стратегія пошуку, співбесіди та переговори.",
-   p:["Резюме та LinkedIn, що працюють","Підготовка до співбесід","Як отримати кращий офер"]},
+  {"t": "Як перетворити ідею на успішний продукт", "h": "6+ год", "price": 15, "d": "Як перебороти страх почати, перевірити ідею і запустити продукт з нуля.", "p": ["Як перебороти страх почати", "Від рісьорчу до вбивства ідей", "Де брати гроші й кофаундерів", "Стартап-операційка: на що зважати", "Розбір кейсів учасників"], "f": ["Хто хоче свій продукт", "Хто досі сумнівається", "Майбутнім фаундерам"], "r": "Чітке розуміння, що робити з ідеєю далі і чи тобі це взагалі потрібно.", "how": ["Відеозапис 6+ год", "Доступ назавжди", "У своєму темпі", "Два лайв-ефіри"], "url": "#"},
+  {"t": "Успішний онбординг", "h": "5+ год", "price": 15, "d": "Як пройти тріал у новій компанії і збільшити свої шанси на успіх. Корисно для будь-якої ролі.", "p": ["DO's і DON'Ts на тріалі", "Очікування твого менеджера", "Health check корпоративної культури", "Feedback loop і ментор", "Пріоритети під час адаптації"], "f": ["Хто шукає роботу", "Хто щойно отримав офер", "Хто зараз на тріалі"], "r": "Знатимеш, як пройти перші місяці в компанії і не завалити тріал через пріоритети чи очікування.", "how": ["Відеозапис 5+ год", "Доступ назавжди", "У своєму темпі", "Великий Q&A"], "url": "#"},
+  {"t": "Комунікація – найкраща зброя", "h": "7.5+ год", "price": 15, "d": "Найпопулярніший Шлях Самурая, під 400 учасників. Як домовлятися з колегами і з менеджером.", "note": "Практикум «Комунікаційне додзьо» був закритим, у Зумі, і в запис не входить.", "p": ["Як давати й отримувати фідбек", "Конфлікти з колегами", "Стосунки з менеджером", "Як казати «ні»", "Коли вже ескалювати проблему"], "f": ["HR та інженерам", "QA і дизайнерам", "Проджектам і супорту", "Усім, хто працює з людьми"], "r": "Робочі інструменти для фідбеку, конфліктів і розмов з менеджером, і вміння казати «ні».", "how": ["Відеозапис 7.5+ год", "Доступ назавжди", "У своєму темпі", "Матеріали та артефакти"], "url": "#"},
+  {"t": "Діскавері і Інсайти", "h": "3+ год", "price": 15, "d": "Product Discovery без магії: як шукати респондентів, писати скрипт, проводити інтерв'ю і діставати інсайти.", "note": "Практикум у Зумі був окремо, на 100 місць, і в запис не входить.", "p": ["Етапи діскавері без міфів", "Де шукати респондентів", "Правила якісного скрипта", "Інтерв'ю: смертні гріхи", "VPD Canvas: Pains, Gains, Jobs"], "f": ["Новачкам у діскавері", "Хто боїться інтерв'ю", "Хто будує системне діскавері"], "r": "Солідна теорія, з якою можна йти робити інтерв'ю. Якщо вже робив, закріпиш і розшириш.", "how": ["Відеозапис 3+ год", "Доступ назавжди", "У своєму темпі", "Без води і булщіту"], "url": "#"},
+  {"t": "Шлях Самозванця", "h": "6+ год", "price": 15, "d": "Звідки береться синдром самозванця, як він б'є по кар'єрі і що з ним робити на практиці.", "note": "Третій день WOMEN ONLY був окремою Зум-сесією і в запис не входить.", "p": ["Що це і чим НЕ є", "Три стовпи синдрому", "Захисти, які не працюють", "Критика без шкоди самооцінці", "Щоденні кроки проти сумнівів"], "f": ["Хто почувається «не тим»", "Лідам і менеджерам", "Хто сам себе саботує"], "r": "Розумітимеш, як працює твій синдром самозванця, і матимеш практичні кроки, щоб він менше заважав.", "how": ["Відеозапис 6+ год", "Доступ назавжди", "У своєму темпі", "Додаткові інструменти"], "url": "#"},
+  {"t": "Монетизація знань", "h": "6+ год", "price": 15, "gold": true, "d": "Як заробляти на своїх знаннях: що працює в Україні, що ні, і покроковий план.", "p": ["Способи монетизувати експертизу", "Що спрацювало, а що ні", "Бренд, що приводить клієнтів", "Ніша: вправа з трьома колами", "Покроковий план монетизації"], "f": ["Експертам з навичкою", "Хто хоче side hustle", "Хто не знає, з чого почати"], "r": "Реальні кейси, простий метод запустити свій продукт чи послугу і перші кроки до бренду.", "how": ["Відеозапис 6+ год", "Доступ назавжди", "У своєму темпі", "Мої реальні цифри"], "url": "#"},
+  {"t": "Топ-10 факапів запуску продукту", "h": "~4.5 год", "price": 15, "d": "Або як не зафейлити. 10 помилок, які топлять продукти ще до запуску, з досвіду 30+ запусків, включно з Eated.", "note": "Другий день «Твоя ідея під рентгеном» був закритим, на 20 людей, і в запис не входить.", "p": ["Справжній біль чи ідея", "MVP без зливу бюджету", "Гроші та інвестори", "Кофаундери і командна драма", "План B: pivot чи kill"], "f": ["Фаундерам", "Хто запускає продукт", "Хто не хоче злити гроші"], "r": "Повна картина від ідеї до ринку, від MVP до фідбеку, від бізнес-моделі до командної драми.", "how": ["Відеозапис ~4.5 год", "Доступ назавжди", "У своєму темпі", "Гості-практики"], "url": "#"},
+  {"t": "Переговори like a PRO", "h": "~4 год", "price": 15, "d": "Як домовлятися по бізнесу, по своїй зарплаті і з колегою, який трохи зажрався.", "p": ["Своя переговорна стратегія", "BATNA замість харизми", "Коли ви не на рівних", "Межі без агресії", "Як готуватися до переговорів"], "f": ["Хто торгується за зарплату", "Хто вибиває бюджети", "Хто звик усім догоджати"], "r": "Своя переговорна стратегія і підготовка замість імпровізації на ходу.", "how": ["Відеозапис ~4 год", "Доступ назавжди", "У своєму темпі", "Кейси і мої пройоби"], "url": "#"},
+  {"t": "Високоефективні команди", "h": "4 год", "price": 15, "d": "Чому команда, де всі стараються, знову не дотягує OKR, і як зібрати таку, що працює як система.", "note": "Практичний день (діагностика своєї команди, ролі, 30-денний план) був окремим воркшопом і в запис не входить.", "p": ["Робоча група чи команда", "Ролі та відповідальність", "Де ламаються команди", "Ясність і узгодженість", "Кейси з мого досвіду"], "f": ["Менеджерам і лідам", "Хто тягне все на собі", "Командам без результату"], "r": "Знатимеш, на якій стадії твоя команда і що змінювати, перш ніж латати процеси та людей.", "how": ["Відеозапис 4 год", "Доступ назавжди", "У своєму темпі", "Авторський фреймворк"], "url": "#"},
+  {"t": "Тренди і АнтиТренди у не-технічному ІТ", "h": "3.5 год", "price": 5, "d": "Що залишаємо у 2025, а що беремо в 2026. Чесно про те, куди рухається продуктовий світ України.", "p": ["Цілі, що не працюють", "Перфекціонізм і FOMO", "Три театри прогресу", "Куди зникли мідли", "AI, куди ж без нього"], "f": ["HR і hiring-менеджерам", "Продактам", "PO і проджектам", "Топ-менеджерам"], "r": "", "how": ["Відеозапис 3.5 год", "Доступ назавжди", "У своєму темпі", "Гості з mono і Google"], "url": "#"},
+  {"t": "Offline: Запуск стартапу як він є", "h": "5+ год", "price": 400, "offline": true, "d": "5+ годин наживо в залі. Без лекцій: розбираємо твій продукт на запчастини і збираємо робочу модель запуску.", "p": ["Гроші: венчур чи бутстрап", "Позиціонування і пітч", "Перша кампанія на Reddit", "ASO-ядро за допомогою LLM", "План перших продажів"], "f": ["Хто застряг на ідеї", "Власникам пет-проєктів"], "r": "Розуміння, де брати гроші під твій тип продукту, готовий пітч і план перших продажів.", "how": ["5+ годин наживо", "Тільки офлайн", "Запису немає", "До 20 учасників"], "url": "#"},
+  {"t": "Темна сторона ІТ", "h": "3.5+ год", "price": 5, "d": "Про те, про що на роботі не прийнято говорити вголос, хоча всі знають. Панель з трьома гостями-практиками.", "p": ["Мікроменеджмент і токсична культура", "Сексизм і кумівство", "Золоті кайданки", "Ейджизм і невидимість", "Прокляття сильного бренду"], "f": ["Хто тягне всі процеси", "Кому відмовили «не через скіли»", "Хто в золотій клітці"], "r": "Розумітимеш, чому це влаштовано саме так, і матимеш конкретну тактику на кожну ситуацію.", "how": ["Відеозапис 3.5+ год", "Доступ назавжди", "У своєму темпі", "Три гості-практики"], "url": "#"},
+  {"t": "Чому ми закрили Eated", "h": "2.5 год", "price": 5, "d": "Без прикрас: перемоги, помилки і факапи Eated, і що ми робили б інакше.", "p": ["Звідки взявся Eated", "Коли зрозуміли, що кінець", "Чого коштувало рішення", "Розмова з командою", "Що робили б інакше"], "f": ["Фаундерам", "Хто будує свій продукт", "Хто втомився від успішного успіху"], "r": "", "how": ["Відеозапис 2.5 год", "Доступ назавжди", "У своєму темпі", "Чесно, без прикрас"], "url": "#"},
+  {"t": "Гіпотези для всіх", "h": "3.5+ год", "price": 15, "d": "Скіл, якого тебе навряд чи вчили, але який від тебе постійно вимагають: думати гіпотезами, а не ідеями.", "p": ["Гіпотеза, яку не соромно показати", "Що перевіряти першим", "Дешева перевірка ідеї", "Коли гіпотези не потрібні", "Розбір під кожну роль"], "f": ["Продактам і PO", "Проджектам і BA", "QA і дизайнерам", "Маркетологам і сапорту"], "r": "Думатимеш гіпотезами на співбесіді, на мітингу і до того, як місяць пиляти фічу.", "how": ["Відеозапис 3.5+ год", "Доступ назавжди", "У своєму темпі", "Розбір під кожну роль"], "url": "#"},
+  {"t": "Як отримати офер в ІТ", "h": "4 год", "price": 19, "d": "Беруть часто не сильнішого, а того, хто краще себе показав. Весь шлях від вакансії до оферу.", "p": ["Де ламається твоя воронка", "Прицільний пошук замість спаму", "CV, що показує цінність", "Співбесіди без «плавання»", "Переговори про офер"], "f": ["Проджектам і QA", "Дизайнерам і маркетологам", "Розробникам", "Хто відгукується в тишу"], "r": "Знайдеш, де губиться твій офер, збереш CV, яке веде на співбесіди, і не погодишся на першу цифру.", "how": ["Відеозапис 4 год", "Доступ назавжди", "У своєму темпі", "Від вакансії до оферу"], "url": "#"}
 ];
-/* Розширений контент для детального екрана: [додаткові пункти програми], [для кого], результат */
-const MORE = [
-  [["Юніт-економіка на пальцях","Від MVP до продукту, що росте"],["Продакт-менеджерам","Фаундерам","Тим, хто має ідею"],"Ви пройдете шлях від ідеї до перевіреного MVP і знатимете, чи варто масштабувати продукт."],
-  [["Метрики онбордингу","Розбір реальних кейсів"],["Продактам","HR та тімлідам","CS-командам"],"Матимете готовий сценарій онбордингу і метрики, за якими видно, що він працює."],
-  [["Публічні виступи та презентації","Комунікація у кризових ситуаціях"],["Усім в ІТ","Менеджерам","Тім- і техлідам"],"Говоритимете так, щоб вас чули: впевнено, коротко і з потрібним результатом."],
-  [["Jobs To Be Done на практиці","Як презентувати інсайти команді"],["Продактам","UX-дослідникам","Дизайнерам"],"Зможете самостійно провести діскавері й перетворити інтерв'ю на рішення для продукту."],
-  [["Як просити підвищення","Робота з фідбеком без болю"],["Джунам і світчерам","Тим, хто виріс у ролі","Усім, хто сумнівається в собі"],"Перестанете знецінювати свій досвід і почнете впевнено заявляти про результати."],
-  [["Особистий бренд експерта","Запуск першого інфопродукту"],["Експертам","Менторам","Фрилансерам"],"Упакуєте експертизу в продукт і отримаєте план перших продажів."],
-  [["Ретроспектива невдалого запуску","Як говорити про провал з інвесторами"],["Фаундерам","Продактам","Маркетологам"],"Знатимете, де найчастіше ламаються запуски, і матимете чек-лист, щоб цього уникнути."],
-  [["Скрипти для складних моментів","Переговори з клієнтами та підрядниками"],["Усім, хто шукає роботу","Менеджерам","Фрилансерам"],"Вийдете на співбесіду чи угоду з планом і закриєте її на своїх умовах."],
-  [["Найм у команду","Робота з конфліктами"],["Тімлідам","Хедам","Фаундерам"],"Зберете команду, яка доставляє результат без вигорання та постійного контролю."],
-  [["Куди рухатися у 2027","Як оновити свій стек навичок"],["Не-технічним ролям в ІТ","Світчерам","HR і рекрутерам"],"Розумітимете, які ролі ростуть, і складете власний план розвитку."],
-  [["Формат зустрічі та учасники","Як потрапити на наступну"],["Спільноті Asta","Випускникам курсів","Тим, хто любить живе спілкування"],"Нові знайомства, живі розбори та енергія спільноти, яку не передати у записі."],
-  [["Токсичні менеджери й культура","Як вчасно піти"],["Усім в ІТ","Тим, хто на межі вигорання","Новачкам"],"Навчитеся помічати червоні прапорці та берегти себе без шкоди для кар'єри."],
-  [["Цифри та метрики Eated","Уроки для власного стартапу"],["Фаундерам","Продактам","Інвесторам-початківцям"],"Отримаєте чесний досвід закриття стартапу й уроки, які зекономлять вам роки."],
-  [["Пріоритезація гіпотез","Шаблони для щоденної роботи"],["Маркетологам","Продактам","Усім, хто ухвалює рішення"],"Перевірятимете ідеї швидко і дешево, замість того щоб сперечатися про думки."],
-  [["Робота з рекрутерами","Перші 90 днів на новій роботі"],["Джунам","Світчерам","Тим, хто шукає нову роботу"],"Матимете стратегію пошуку, готові матеріали та впевненість на співбесідах."],
-];
-COURSES.forEach((c,i)=>{ const m = MORE[i]; c.p = c.p.concat(m[0]); c.f = m[1]; c.r = m[2]; });
 // [пропорція картинки, центр ніг по X] — щоб номер стояв рівно між ніг
 const FEET = [[0.423,0.496],[0.363,0.497],[0.384,0.497],[0.457,0.379],[0.398,0.479],[0.405,0.490],[0.408,0.463],[0.344,0.490],[0.397,0.473],[0.438,0.427],[0.409,0.511],[0.395,0.485],[0.427,0.466],[0.373,0.519],[0.540,0.340]];
 // скільки перших слів назви підсвічувати градієнтом
@@ -798,8 +758,8 @@ const HL = [2,1,1,1,1,1,2,1,1,3,1,2,3,1,2];
 COURSES.forEach((c,i)=>c.hl=HL[i]);
 const N = COURSES.length;
 /* ПАКЕТ «Весь клан» — умовна ціна, редагуйте */
-const BUNDLE = { price: 490, url: "#" };
-const money = n => "$" + n.toLocaleString("en-US");
+const BUNDLE = { price: 130, url: "#" };
+const money = n => n.toLocaleString("uk-UA") + " €";
 COURSES.forEach((c,i)=>{c.n=i+1;c.img=`img/s${i+1}.webp`;c.k=1;});
 COURSES[14].k = 1.33;   // лучник: лук додає висоти — масштабуємо по фігурі, а не по луку
 const pad = n => String(n).padStart(2,"0");
@@ -810,7 +770,7 @@ const stage = $("stage"), floor = $("floor");
 const els = COURSES.map((c,i)=>{
   const el = document.createElement("div");
   el.className = "sam" + (c.offline ? " ghost" : "");
-  el.innerHTML = `<div class="tag">${pad(c.n)} · ${c.t}</div><div class="foot"></div><div class="cap"><b>${pad(c.n)}</b>${c.t}<br><span style="display:inline-block;margin-top:5px;color:${c.free?"var(--lime)":c.offline?"var(--gold)":"#9aa89e"};font-weight:600">${c.free?"● Безкоштовно":c.offline?"Офлайн":money(c.price)}</span></div><button aria-label="${pad(c.n)} — ${c.t}"><img alt="" draggable="false" decoding="async"></button>`;
+  el.innerHTML = `<div class="tag">${pad(c.n)} · ${c.t}</div><div class="foot"></div><div class="cap"><b>${pad(c.n)}</b>${c.t}<br><span style="display:inline-block;margin-top:5px;color:${c.offline?"var(--gold)":"#9aa89e"};font-weight:600">${money(c.price)}${c.offline?" · офлайн":""}</span></div><button aria-label="${pad(c.n)} — ${c.t}"><img alt="" draggable="false" decoding="async"></button>`;
   el.querySelector("button").addEventListener("click", e=>{
     if (moved) return;
     if (mode==="grid"){ goTo(i); openDetail(i); return; }
@@ -968,14 +928,9 @@ function step(dir){ if (mode==="grid" && !$("detail").classList.contains("open")
 
 /* ============ ACTIVE CARD ============ */
 function stats(c){
-  const price = c.free ? `<div class="stat is-free"><small>Ціна</small><strong>Безкоштовно</strong></div>`
-              : c.offline ? `<div class="stat is-off"><small>Ціна</small><strong>Офлайн</strong></div>`
-              : `<div class="stat"><small>Ціна</small><strong>${money(c.price)}</strong></div>`;
-  if (c.offline) return `<div class="stat is-off"><small>Формат</small><strong>Тільки офлайн</strong></div>
-          <div class="stat"><small>Запис</small><strong>Немає</strong></div>
-          <div class="stat is-off"><small>Наступна</small><strong>Скоро</strong></div>`;
   return `<div class="stat"><small>Тривалість</small><strong>${c.h}</strong></div>
-          <div class="stat"><small>Формат</small><strong>Запис</strong></div>${price}`;
+          <div class="stat${c.offline?" is-off":""}"><small>Формат</small><strong>${c.offline?"Офлайн":"Запис"}</strong></div>
+          <div class="stat${c.offline?" is-off":""}"><small>Ціна</small><strong>${money(c.price)}</strong></div>`;
 }
 function setActive(i){
   if (i===active && $("cTitle").textContent) return;
@@ -983,7 +938,7 @@ function setActive(i){
   primeAround(i);
   const body = $("cBody"); body.classList.add("out");
   setTimeout(()=>{
-    $("cTitle").textContent = c.t; $("cMeta").innerHTML = stats(c);
+    $("cTitle").innerHTML = (c.offline ? `<span class="off-badge">Ексклюзивно офлайн</span>` : "") + c.t; $("cMeta").innerHTML = stats(c);
     body.classList.remove("out");
   }, 180);
   $("cNum").textContent = pad(c.n);
@@ -998,32 +953,31 @@ function fillDetail(i){
   dl.classList.toggle("gold", !!c.gold);
   dl.classList.toggle("ghost", !!c.offline);
   $("dNum").textContent = pad(c.n); $("dCur").textContent = pad(c.n);
-  const w = c.t.replace(" —","").split(" ");
+  const w = c.t.replace(/ [—–]/,"").split(" ");
   $("dTitle").innerHTML = `<span class="hl">${w.slice(0,c.hl).join(" ")}</span><span>${w.slice(c.hl).join(" ")}</span>`;
   $("dDesc").textContent = c.d;
+  $("dNoteTop").textContent = c.note || ""; $("dNoteTop").hidden = !c.note;
+  $("dBadge").hidden = !c.offline;
   $("dPoints").innerHTML = c.p.map(x=>`<li>${x}</li>`).join("");
   $("dFor").innerHTML = c.f.map(x=>`<span>${x}</span>`).join("");
-  $("dRes").textContent = c.r;
-  $("dHow").innerHTML = (c.offline
-    ? [["◎","Тільки наживо"],["✦","Нетворкінг"],["✎","Живі розбори"],["🔔","Анонс у Telegram"]]
-    : [["▶","Відеозапис "+c.h],["∞","Доступ назавжди"],["⏱","У своєму темпі"],["✎","Матеріали та шаблони"]]
-  ).map(([i,t])=>`<div><i>${i}</i>${t}</div>`).join("");
+  $("dRes").textContent = c.r; $("dRes").parentElement.hidden = !c.r;
+  const IC = c.offline ? ["◎","✦","✕","👥"] : ["▶","∞","⏱","✦"];
+  $("dHow").innerHTML = c.how.map((t,k)=>`<div><i>${IC[k]}</i>${t}</div>`).join("");
   $("detail").querySelector(".d-left").scrollTop = 0;
   const img = $("dImg");
   img.src = c.img; img.alt = c.t; img.style.setProperty("--k", c.k); dl.style.setProperty("--k", c.k);
   img.style.transform = `translateX(${((0.5 - FEET[i][1])*100).toFixed(1)}%)`;
-  $("dHours").textContent = c.offline ? "Наживо" : c.h;
-  $("dFormat").textContent = c.offline ? "Тільки офлайн" : "Відеозапис";
-  const pr = $("dPrice"); pr.className = c.free ? "free" : ""; pr.style.cssText = "";
+  $("dHours").textContent = c.h;
+  $("dFormat").textContent = c.offline ? "Офлайн-воркшоп" : "Відеозапис";
+  const pr = $("dPrice"); pr.className = ""; pr.style.cssText = "";
   buy_reset();
   const buy = $("dBuy"); buy.href = c.url; buy.removeAttribute("aria-disabled"); buy.className="btn";
-  if (c.free){ pr.textContent="Безкоштовно"; buy.textContent="Отримати безкоштовно"; $("dNote").textContent="Доступ одразу після реєстрації"; }
-  else if (c.offline){ pr.textContent="Подія наживо"; pr.className="free"; pr.style.cssText="color:var(--gold);font-size:18px;text-shadow:none"; buy.textContent="🔔 Хочу на наступну зустріч"; buy.className="btn gold"; $("dNote").textContent="Подія проходить лише наживо, запису немає"; }
+  if (c.offline){ pr.textContent = money(c.price); buy.textContent=`Записатися за ${money(c.price)}`; buy.className="btn gold"; $("dNote").textContent="Ексклюзивно офлайн. Запису немає, у бандл не входить."; }
   else { pr.textContent = money(c.price); buy.textContent=`Купити за ${money(c.price)}`; $("dNote").textContent="Доступ до запису назавжди"; }
 }
 function buy_reset(){ $("wl").hidden = true; $("wlOk").hidden = true; $("dBuy").hidden = false; }
 $("dBuy").addEventListener("click", e=>{
-  if (!COURSES[active].offline) return;
+  if (!COURSES[active].offline || COURSES[active].price) return;
   e.preventDefault(); $("dBuy").hidden = true; $("wl").hidden = false; $("wlIn").focus();
 });
 $("wl").addEventListener("submit", e=>{
@@ -1089,19 +1043,21 @@ function closeDetail(opts = {}){
 }
 
 /* ============ BUNDLE ============ */
-const PAID = COURSES.filter(c=>!c.free && !c.offline);
+const PAID = COURSES.filter(c=>!c.offline);   // у бандл входять усі записи (офлайн — ні)
 const fullPrice = PAID.reduce((a,c)=>a+c.price,0);
 const savePct = Math.round((1 - BUNDLE.price/fullPrice)*100);
 document.querySelector(".offer-pill em").textContent = `−${savePct}%`;
 document.querySelector(".o-badge span").textContent = `Весь клан · −${savePct}%`;
+document.querySelectorAll(".gb-badge").forEach(e=>e.textContent = `−${savePct}% знижка`);
+document.querySelectorAll(".o-off").forEach(e=>e.textContent = `−${savePct}%`);
 $("gOld").textContent = $("bOld").textContent = money(fullPrice);
 $("gSave").textContent = `економія ${money(fullPrice-BUNDLE.price)}`;
 $("gNew").textContent = $("bNew").textContent = money(BUNDLE.price);
 $("dUpPrice").textContent = money(BUNDLE.price);
-$("bSave").textContent = `Економія ${money(fullPrice-BUNDLE.price)} · ${PAID.length} платних + ${COURSES.filter(c=>c.free).length} безкоштовні курси`;
-$("bText").textContent = "Повний арсенал: від ідеї й онбордингу до переговорів, команд і оферу. Усі записи в одному доступі + анонси офлайн-зустрічей клану.";
+$("bSave").textContent = `Економія ${money(fullPrice-BUNDLE.price)} · ${PAID.length} курсів у записі`;
+$("bText").textContent = "Усі 14 Шляхів Самурая в записі, в одному доступі. Комунікація, діскавері, переговори, команди, гіпотези, офер, запуск продукту і решта. Без води і булщіту: кожен Шлях закриває один біль, з яким до нас приходила спільнота.";
 $("bBuy").href = BUNDLE.url;
-// ряд усіх 15 самураїв: №1 у центрі, до країв трохи менші
+// ряд самураїв: №1 у центрі, до країв трохи менші
 const CLAN_ROW = [11,9,7,5,3,13,2,1,6,14,4,12,8,10,15];   // лучник — у самому кінці, позаду всіх
 function clanRow(){
   return CLAN_ROW.map((n,i)=>{
@@ -1127,7 +1083,7 @@ const FORM = [
 function buildArmy(){
   // один готовий кадр зі всім кланом — без поштучного завантаження
   $("army").innerHTML = `<div class="disk"><div class="shadow"></div><div class="side"></div><div class="top"></div></div>
-    <img class="army-img" id="armyImg" alt="Усі 15 самураїв Asta Academy">`;
+    <img class="army-img" id="armyImg" alt="Усі Шляхи Самурая Asta Academy">`;
 }
 buildArmy();
 function sizeArmyDisk(){
@@ -1144,9 +1100,9 @@ addEventListener("resize", sizeArmyDisk);
 /* ============ MENU ============ */
 function buildList(f="all"){
   $("list").innerHTML = COURSES.map((c,i)=>{
-    const show = f==="all" || (f==="free" && c.free) || (f==="paid" && !c.free && !c.offline);
+    const show = f==="all" || (f==="free" && c.offline) || (f==="paid" && !c.offline);
     return `<button class="row ${show?"":"dim"}" data-i="${i}">
-      <span><b>№${pad(c.n)}${c.free?" · безкоштовний":c.offline?" · офлайн":""}</b><span>${c.t}</span><small>${c.offline?"Запису немає":c.h+" контенту"} · ${c.free?'<em style="font-style:normal;color:var(--lime);font-weight:600">Безкоштовно</em>':c.offline?"офлайн":money(c.price)}</small></span>
+      <span><b>№${pad(c.n)}${c.offline?" · ексклюзивно офлайн":""}</b><span>${c.t}</span><small>${c.h}${c.offline?" наживо · запису немає":" контенту"} · ${money(c.price)}</small></span>
     </button>`;}).join("");
 }
 buildList();
